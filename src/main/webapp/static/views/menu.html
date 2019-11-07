@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java资源库</title>
+    <script type="text/javascript" src="/static/jquery/jquery-3.1.4.js"></script>
+    <!--<script type="text/css" src="/static/css/menu.css"></script>-->
+    <link rel="styleSheet" href="/static/css/menu.css" type="text/css">
+</head>
+<body>
+<div id="main_view">
+    <div id="test_view" class="jsn_menu_style">
+        456456e
+    </div>
+    <div id="100001" class="jsn_content_style">
+
+        <input id="file" type="file" name="file"/>
+        <button id="upload" onclick="upload()" class="button_style"/>
+        <!--上传按钮-->
+        <!--文本-->
+        <!--视频框-->
+        <!--图片框-->
+        <!--代码栏-->
+
+    </div>
+</div>
+
+
+</body>
+<script>
+    function upload() {
+        var formData = new FormData();
+        formData.append("upload_file", $("#file")[0].files[0]);
+        formData.append("id",$("#file").parent().attr("id"));
+        // alert($("#file").parent().attr("id"));
+        $.ajax({
+            url: "/content/upload",
+            type:'POST',
+            data:formData,
+            contentType:false,
+            processData:false,//这个很有必要，不然不行
+            dataType:"json",
+            mimeType:"multipart/form-data",
+
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () {
+                // layer.msg("客户端请求有误");
+                alert("客户端请求有误")
+            }
+        });
+    }
+</script>
+
+<script>
+    $.ajax({
+        url: "/menu/data",
+        type: "GET",
+        // 入参
+        data: {
+            // goodsId:goodsId,
+            // verifyCode:$("#verifyCode").val()
+            menuId:0
+        },
+        success: function (data) {
+            var list = data.data;
+            var parent = document.getElementById("main_view");
+            // for (var i = 0; i < list.length; i++) {
+            //     //动态添加DIV
+            //     var div = document.createElement("div");
+            //     div.setAttribute("id", list[i].id);
+            //     div.setAttribute("class", "jsn_menu_style");
+            //     div.innerHTML = list[i].name;
+            //     parent.appendChild(div);
+            // }
+            console.log(data);
+        },
+        error: function () {
+            // layer.msg("客户端请求有误");
+            alert("客户端请求有误")
+        }
+    });
+</script>
+</html>

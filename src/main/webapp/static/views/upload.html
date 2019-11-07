@@ -1,0 +1,30 @@
+<!DOCTYPE html >
+<html lang="en">
+<head>
+    <!--解决中文乱码-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <script>
+        // 判断是否填写上传人并已经选择上传文件
+        function check() {
+            var file = document.getElementById("file").value();
+            if (file.length == 0 || file == "") {
+                alert("请选择上传文件");
+                return false;
+            }
+            alert("执行");
+            return true;
+        }
+    </script>
+</head>
+<body>
+<H1>tomcat1</H1>
+<h2>Hello World!</h2>
+springMVC上传文件
+<form name="form1" action="/file/upload" method="post" enctype="multipart/form-data" onsubmit="return check()">
+    <!--<input id="file" type="file" name="upload_file" multiple="multiple">-->
+    <input id="file" type="file" name="upload_file">
+    <input type="submit" value="springMVC上传文件">
+</form>
+</body>
+</html>

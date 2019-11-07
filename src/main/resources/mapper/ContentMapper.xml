@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.jsn.dao.ContentMapper">
+    <resultMap id="content" type="com.ccsu.jsn.pojo.Content">
+        <result property="id" column="id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="text" column="text"/>
+        <result property="img" column="img"/>
+        <result property="video" column="video"/>
+        <result property="code" column="code"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <parameterMap id="contentPar" type="com.ccsu.jsn.pojo.Content">
+        <parameter property="id"/>
+        <parameter property="parentId"/>
+        <parameter property="userId"/>
+        <parameter property="text"/>
+        <parameter property="img"/>
+        <parameter property="video"/>
+        <parameter property="code"/>
+        <parameter property="createTime"/>
+        <parameter property="updateTime"/>
+    </parameterMap>
+
+    <select id="selectByParentId" resultMap="content">
+        select * from content where parent_id = #{parentId}
+    </select>
+
+    <insert id="insert" parameterMap="contentPar">
+        insert into content (id,parent_id,user_id,text,img,video,code,create_time,update_time)
+        values (#{id},#{parentId},#{userId},#{text},#{img},#{video},#{code},#{createTime},#{updateTime})
+    </insert>
+
+    <insert id="update" parameterMap="contentPar">
+        update content
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="text != null">
+                text = #{text},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="video != null">
+                video = #{video},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+        </set>
+        where id =#{id}
+    </insert>
+
+</mapper>

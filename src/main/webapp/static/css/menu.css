@@ -1,0 +1,37 @@
+.jsn_menu_style{
+    background-color: aquamarine;
+    width: 100px;
+    height: 62px;
+    /*line-height:184px;*/
+    /*圆角*/
+    border-radius: 25px;
+    /*边距*/
+    margin-left: 20px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    /*div容器阴影*/
+    box-shadow: 10px 10px 5px #888888;
+    text-shadow: 10px 10px 5px #888888;
+
+    /*float: left;*/
+    /*字体*/
+    font-size: 18px;
+    text-align: center;
+    /*自动换行*/
+    display:block;word-break: break-all;word-wrap: break-word;
+}
+.jsn_content_style{
+    background-color: #cafff7;
+    width: 800px;
+    min-height: 200px;
+    border-radius: 15px;
+
+
+
+}
+.button_style{
+    margin-top: 20px;
+    width: 50px;
+    height: 25px;
+}
+

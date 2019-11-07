@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- jquery-validator -->
+    <!--<script type="text/javascript" src="/static/jquery-validation/jquery.validate.min.js"></script>-->
+    <!--<script type="text/javascript" src="/static/jquery-validation/localization/messages_zh.min.js"></script>-->
+    <script type="text/javascript" src="/static/jquery/jquery-3.1.4.js"></script>
+    <!--<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"/>-->
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <td>手机号</td><td id="phone"></td>
+        </tr>
+        <tr>
+            <td>密码</td><td id="password"></td>
+        </tr>
+        <tr>
+            <td>用户角色</td><td id="role"></td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    $.ajax({
+        url:"/test/get_user",
+        type:"GET",
+        // 入参
+        data:{
+            // goodsId:goodsId,
+            // verifyCode:$("#verifyCode").val()
+
+        },
+        success:function(data){
+
+            // alert(data);
+            var user = data.data;
+            $("#phone").text(user.phone);
+            // $("#goodsImg").attr("src", goods.goodsImg);
+            $("#password").text(user.password);
+            $("#role").text(user.role);
+            // $("#createDate").text(new Date(order.createDate).format("yyyy-MM-dd hh:mm:ss"));
+            // if(data.code == 0){
+            //     var path = data.data;
+            //     doMiaosha(path);
+            // }else{
+            //     layer.msg(data.msg);
+            // }
+
+        },
+        error:function(){
+            // layer.msg("客户端请求有误");
+            alert("客户端请求有误")
+        }
+    });
+</script>
+
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.jsn.dao.MenuMapper">
+    <resultMap id="menu" type="com.ccsu.jsn.pojo.Menu">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap id="menuList" type="java.util.List"></resultMap>
+    <select id="selectById" resultMap="menu">
+        select * from menu where id = #{id}
+    </select>
+
+    <select id="selectByName" resultMap="menu">
+        select * from menu where `name`=#{name}
+    </select>
+    <select id="selectMenusByParentId" resultMap="menu">
+        select * from menu where `parent_id`=#{parentId}
+    </select>
+</mapper>
