@@ -20,7 +20,7 @@
     <iframe id="jsn_code" name="jsn_code" class="jsn_frame_style" style="display: none"></iframe>
     <!--文件上传-->
     <input id="file" type="file" name="file"/>
-    <!--上传按钮-->
+    <!--上传按钮,点击后判断是否会覆盖之前文件，征求用户意见-->
     <button id="upload" onclick="upload()" class="button_style"/>
 </div>
 </body>
@@ -40,12 +40,10 @@
             if (jsn_content.img != null && jsn_content.img != "") {
                 console.log(jsn_content.img);
                 display_frame("jsn_img",jsn_content.img);
-
             }
             if (jsn_content.code != null && jsn_content.code != "") {
                 console.log(jsn_content.code);
                 display_frame("jsn_code",jsn_content.code);
-
             }
             if (jsn_content.text != null && jsn_content.text != "") {
                 console.log(jsn_content.text);
@@ -54,15 +52,12 @@
             if (jsn_content.video != null && jsn_content.video != "") {
                 console.log(jsn_content.video);
                 display_frame("jsn_video",jsn_content.video);
-
             }
             console.info(data);
         },
         error: function () {
-            // alert("客户端请求错误")
             alert($("#content_main").attr("name"))
         }
-
     });
     function display_frame(frame_id,src_value){
         var frame = document.getElementById(frame_id);

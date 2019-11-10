@@ -47,7 +47,7 @@ public class ContentServiceImpl implements IContentService {
 
     @Override
     public Result getContent(long id) {
-        content = contentMapper.selectById(id);
+        content = contentMapper.selectByParentId(id);
         logger.info("on {} print {}",this.getClass().getName(),content );
         return Result.success(content);
     }

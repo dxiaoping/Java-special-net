@@ -18,14 +18,17 @@
     font-size: 18px;
     text-align: center;
     /*自动换行*/
-    display:block;word-break: break-all;word-wrap: break-word;
+    /*display:inline-block;*/
+    word-break: break-all;
+    word-wrap: break-word;
 }
 .jsn_content_style{
     background-color: #cafff7;
     width: 800px;
     min-height: 200px;
     border-radius: 15px;
-
+    text-align: center;
+    /*display: inline-block;*/
 }
 .jsn_frame_style{
     width:800px;
