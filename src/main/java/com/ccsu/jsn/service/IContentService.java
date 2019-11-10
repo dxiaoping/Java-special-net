@@ -5,4 +5,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IContentService {
     Result upload(MultipartFile file, String path);
+    Result getContent(long id);
 }

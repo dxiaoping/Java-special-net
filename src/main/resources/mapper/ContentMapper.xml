@@ -31,6 +31,10 @@
         select * from content where parent_id = #{parentId}
     </select>
 
+    <select id="selectById" resultMap="content">
+        select * from content where id = #{id}
+    </select>
+
     <insert id="insert" parameterMap="contentPar">
         insert into content (id,parent_id,user_id,text,img,video,code,create_time,update_time)
         values (#{id},#{parentId},#{userId},#{text},#{img},#{video},#{code},#{createTime},#{updateTime})

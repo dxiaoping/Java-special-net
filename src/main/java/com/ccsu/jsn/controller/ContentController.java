@@ -37,8 +37,25 @@ public class ContentController {
          */
         System.out.println("已进入上传控制器");
         String path = request.getSession().getServletContext().getRealPath("upload");
+        System.out.println("在控制层"+path);
         contentService.upload(file,path);
         System.out.println("已结束上传");
         return Result.success(0);
+    }
+
+    @RequestMapping(value = "get_content",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getContent(@RequestParam("contentId") long contentId){
+
+        System.out.println("id号为："+contentId);
+
+        return contentService.getContent(contentId);
+    }
+
+    @RequestMapping(value = "content_view")
+    public String gotoContentView(
+//            @RequestParam("menuId") long menuId
+    ){
+        return "content";
     }
 }

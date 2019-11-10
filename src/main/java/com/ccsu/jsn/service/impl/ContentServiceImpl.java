@@ -4,6 +4,7 @@ import com.ccsu.jsn.common.Result;
 import com.ccsu.jsn.dao.ContentMapper;
 import com.ccsu.jsn.pojo.Content;
 import com.ccsu.jsn.service.IContentService;
+import com.ccsu.jsn.util.FTPUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,19 @@ public class ContentServiceImpl implements IContentService {
         if ("success".equals(fileUpload(file, path).getMsg())) {
             content.setUserId(15574902295l);
             content.setId(100001);
-            logger.info("content:{}",content);
+            logger.info("content:{}", content);
+
             contentMapper.update(content);
         }
         return Result.success(0);
     }
 
+    @Override
+    public Result getContent(long id) {
+        content = contentMapper.selectById(id);
+        logger.info("on {} print {}",this.getClass().getName(),content );
+        return Result.success(content);
+    }
 
     private void initFileClass() {
         map.put("jpg", "img");
@@ -64,10 +72,10 @@ public class ContentServiceImpl implements IContentService {
         String uploadFileName = UUID.randomUUID().toString() + "." + fileSuffix;
         System.out.println("开始上传");
         logger.info("开始上传文件，上传的文件名：{}，上传的路径：{}，新文件名：{} ", fileName, path, uploadFileName);
-        logger.info("文件类型为：{}",map.get(fileSuffix));
+        logger.info("文件类型为：{}", map.get(fileSuffix));
         path = path + "\\" + map.get(fileSuffix);
 
-        content.set(map.get(fileSuffix), path + "\\" +uploadFileName);
+        content.set(map.get(fileSuffix), "\\upload\\"+map.get(fileSuffix)+"\\" + uploadFileName);
         File fileDir = new File(path);
         if (!fileDir.exists()) {
             fileDir.setWritable(true);
@@ -82,7 +90,7 @@ public class ContentServiceImpl implements IContentService {
 //            FTPUtil.uploadFile(Lists.newArrayList(targetFile));
 
             //删除upload下的文件
-            logger.info("删除upload下文件结果：{}", targetFile.delete());
+//            logger.info("删除upload下文件结果：{}", targetFile.delete());
         } catch (IOException e) {
             logger.error("上传文件异常", e);
             return Result.error("上传失败");

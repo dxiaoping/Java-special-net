@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/static/jquery/jquery-3.1.4.js"></script>
+    <link rel="styleSheet" href="/static/css/menu.css" type="text/css">
+
+    <title>内容面板测试</title>
+</head>
+<body>
+<div id="content_main" name="100001" class="jsn_content_style">
+
+    <!--文本-->
+    <iframe id="jsn_text" name="jsn_text" class="jsn_frame_style" style="display: none"></iframe>
+    <!--视频框-->
+    <iframe id="jsn_video" name="jsn_video" class="jsn_frame_style" style="display: none"></iframe>
+    <!--图片框-->
+    <iframe id="jsn_img" name="jsn_img" class="jsn_frame_style" style="display: none"></iframe>
+    <!--代码栏-->
+    <iframe id="jsn_code" name="jsn_code" class="jsn_frame_style" style="display: none"></iframe>
+    <!--文件上传-->
+    <input id="file" type="file" name="file"/>
+    <!--上传按钮-->
+    <button id="upload" onclick="upload()" class="button_style"/>
+</div>
+</body>
+
+<script>
+    $.ajax({
+        url: "/content/get_content",
+        type: "POST",
+        data: {
+            contentId: $("#content_main").attr("name")
+            // contentId:100001
+        },
+        success: function (data) {
+            var jsn_content = data.data;
+            console.log(jsn_content);
+
+            if (jsn_content.img != null && jsn_content.img != "") {
+                console.log(jsn_content.img);
+                display_frame("jsn_img",jsn_content.img);
+
+            }
+            if (jsn_content.code != null && jsn_content.code != "") {
+                console.log(jsn_content.code);
+                display_frame("jsn_code",jsn_content.code);
+
+            }
+            if (jsn_content.text != null && jsn_content.text != "") {
+                console.log(jsn_content.text);
+                display_frame("jsn_text",jsn_content.text);
+            }
+            if (jsn_content.video != null && jsn_content.video != "") {
+                console.log(jsn_content.video);
+                display_frame("jsn_video",jsn_content.video);
+
+            }
+            console.info(data);
+        },
+        error: function () {
+            // alert("客户端请求错误")
+            alert($("#content_main").attr("name"))
+        }
+
+    });
+    function display_frame(frame_id,src_value){
+        var frame = document.getElementById(frame_id);
+        frame.setAttribute("src", src_value);
+        $("#"+frame_id).css('display','block');
+        frame.contentWindow.location.reload(true);
+    }
+</script>
+
+<script>
+    function upload() {
+        var formData = new FormData();
+        formData.append("upload_file", $("#file")[0].files[0]);
+        formData.append("id", $("#file").parent().attr("name"));
+        // alert($("#file").parent().attr("name"));
+        $.ajax({
+            url: "/content/upload",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,//这个很有必要，不然不行
+            dataType: "json",
+            mimeType: "multipart/form-data",
+
+            success: function (data) {
+
+                console.log(data);
+            },
+            error: function () {
+                // layer.msg("客户端请求有误");
+                alert("客户端请求有误")
+            }
+        });
+    }
+</script>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:max-height="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Java资源库</title>
@@ -10,18 +10,28 @@
 <body>
 <div id="main_view">
     <div id="test_view" class="jsn_menu_style">
-        456456e
+        测试
     </div>
     <div id="100001" class="jsn_content_style">
+        <!--<iframe id="jsn_text" name="jsn_text" width="800" height="500"-->
+                <!--src="\upload\code\21ff9fea-8016-46c8-94c4-5098c9ac2ffc.java"></iframe>-->
 
-        <input id="file" type="file" name="file"/>
-        <button id="upload" onclick="upload()" class="button_style"/>
-        <!--上传按钮-->
         <!--文本-->
+        <iframe id="jsn_text" name="jsn_text" width="800" height="500"
+                src="\upload\code\21ff9fea-8016-46c8-94c4-5098c9ac2ffc.java"></iframe>
         <!--视频框-->
+        <iframe id="jsn_video" name="jsn_video" width="800" height="500"
+                src="\upload\code\21ff9fea-8016-46c8-94c4-5098c9ac2ffc.java"></iframe>
         <!--图片框-->
+        <iframe id="jsn_img" name="jsn_img" width="800" height="500"
+                src="\upload\code\21ff9fea-8016-46c8-94c4-5098c9ac2ffc.java"></iframe>
         <!--代码栏-->
+        <iframe id="jsn_code" name="jsn_code" width="800" height="500"
+                src="\upload\code\21ff9fea-8016-46c8-94c4-5098c9ac2ffc.java"></iframe>
+        <input id="file" type="file" name="file"/>
 
+        <!--上传按钮-->
+        <button id="upload" onclick="upload()" class="button_style"/>
     </div>
 </div>
 
@@ -46,11 +56,11 @@
                 console.log(data);
             },
             error: function () {
-                // layer.msg("客户端请求有误");
                 alert("客户端请求有误")
             }
         });
     }
+
 </script>
 
 <script>

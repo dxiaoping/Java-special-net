@@ -10,7 +10,7 @@
     <!--静态资源映射-->
     <mvc:resources mapping="/static/views/**" location="/static/views/"/>
     <mvc:resources mapping="/static/**" location="/static/"/>
-
+    <mvc:resources mapping="/upload/**" location="/upload/"/>
     <!--配置视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
