@@ -1,6 +1,7 @@
 package com.ccsu.jsn.dao;
 
 import com.ccsu.jsn.pojo.Content;
+import com.ccsu.jsn.pojo.Enclosures;
 import com.ccsu.jsn.pojo.Menu;
 import com.ccsu.jsn.pojo.User;
 import org.apache.ibatis.io.Resources;
@@ -61,7 +62,7 @@ public class daoTest {
         ContentMapper contentMapper = sqlSession.getMapper(ContentMapper.class);
         Content content = new Content();
         content.setId(100001);
-        content.setParentId(1001);
+        content.setMenuId(1001);
         content.setUserId(15574902295l);
         content.setText("textUrl");
         content.setImg("imgUrl");
@@ -69,6 +70,24 @@ public class daoTest {
         content.setCode("codeUrl");
 
         System.out.println(contentMapper.update(content));
+//        sqlSession.commit();
+//        System.out.println(contentMapper.selectByParentId(1001));
+
+    }
+
+    @Test
+    public void testEnclo() throws IOException {
+
+        EnclosuresMapper enclosuresMapper = sqlSession.getMapper(EnclosuresMapper.class);
+        Enclosures enclosures = new Enclosures();
+        enclosures.setId(1003001l);
+        enclosures.setUserId(15574902295l);
+        enclosures.setContentId(1111111l);
+        enclosures.setName("1111111");
+        enclosures.setUrl("enclosuresURL");
+
+//        enclosuresMapper.insert(enclosures);
+        System.out.println(enclosuresMapper.insert(enclosures));
 //        sqlSession.commit();
 //        System.out.println(contentMapper.selectByParentId(1001));
 

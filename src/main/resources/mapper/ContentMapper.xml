@@ -5,7 +5,7 @@
 <mapper namespace="com.ccsu.jsn.dao.ContentMapper">
     <resultMap id="content" type="com.ccsu.jsn.pojo.Content">
         <result property="id" column="id"/>
-        <result property="parentId" column="parent_id"/>
+        <result property="menuId" column="menu_id"/>
         <result property="userId" column="user_id"/>
         <result property="text" column="text"/>
         <result property="img" column="img"/>
@@ -17,7 +17,7 @@
 
     <parameterMap id="contentPar" type="com.ccsu.jsn.pojo.Content">
         <parameter property="id"/>
-        <parameter property="parentId"/>
+        <parameter property="menuId"/>
         <parameter property="userId"/>
         <parameter property="text"/>
         <parameter property="img"/>
@@ -28,7 +28,7 @@
     </parameterMap>
 
     <select id="selectByParentId" resultMap="content">
-        select * from content where parent_id = #{parentId}
+        select * from content where menu_id = #{menuId}
     </select>
 
     <select id="selectById" resultMap="content">

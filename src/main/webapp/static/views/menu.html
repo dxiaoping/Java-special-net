@@ -4,17 +4,49 @@
     <meta charset="UTF-8">
     <title>Java资源库</title>
     <script type="text/javascript" src="/static/jquery/jquery-3.1.4.js"></script>
-    <!--<script type="text/css" src="/static/css/menu.css"></script>-->
     <link rel="styleSheet" href="/static/css/menu.css" type="text/css">
+    <!--=====================================-->
+    <!--<link href="style.css" rel="stylesheet" type="text/css" />-->
+    <script src="/static/js/layer-v3.1.1/layer/layer.js"></script>
+    <script src="/static/js/demo.js"></script>
 </head>
-<body style="display: flex;">
-<div id="main_view" >
+<body>
+<div style="display: flex;">
+    <!--<div>-->
+    <!--登录弹窗-->
+    <div id="header">
+        <div id="header-con">
+            <div><a href="javascript:;" id="bLogin" onclick="ShowLoginText()">登录</a></div>
+            <div><a href="javascript:;" id="bReg">注册</a></div>
+        </div>
+    </div>
+    <div id="errormessage">45645</div>
+    <div id="loginBox">
+        <div class="login-item"><input type="text" id="InputUsername" placeholder="请输入用户名"/></div>
+        <div class="login-item"><input type="password" id="InputUserPwd" placeholder="请输入密码"/></div>
+        <!--<div class="login-item"><a href="#" onclick="Login()">登录</a></div>-->
+
+        <div class="login-item"><a onclick="Login()">登录</a></div>
+    </div>
+    <!--================================================================================-->
+</div>
+
+<div id="main_view" style="width: 100%; height: 30px">
     <!--按钮悬浮事件、按钮点击事件-->
     <!--<button onclick="" onmouseover=""></button>-->
-    <ul id="menu" style="width: 100px"></ul>
+    <ul id="menu"></ul>
 </div>
-<div id="content_main" name="100001" class="jsn_content_style">
+<div id="content_main" class="jsn_content_style">
+    <div id="enclosure">
+        <a href="/file/download?filename=842d8a86-136a-406a-b7e0-d7dbdc8ed089.java">文件下载</a>
 
+        <!--<a href="\upload\enclosures\842d8a86-136a-406a-b7e0-d7dbdc8ed089.java" style="order: 1">java代码</a><br>-->
+        <!--<a href="http://www.baidu.com" style="order: -1">百度</a><br>-->
+
+    </div>
+    <input id="enclosure_file" type="file" name="enclosure_file"/>
+    <button id="enclosure_upload" onclick="upload_enclo()">上传附件</button>
+    <br>
     <!--文本-->
     <iframe id="jsn_text" name="jsn_text" class="jsn_frame_style" style="display: none"></iframe>
     <!--视频框-->
@@ -26,7 +58,9 @@
     <!--文件上传-->
     <input id="file" type="file" name="file"/>
     <!--上传按钮,点击后判断是否会覆盖之前文件，征求用户意见-->
-    <button id="upload" onclick="upload()" class="button_style"/>
+    <button id="upload" onclick="upload()" class="button_style">上传文件</button>
+    <br><br><br><br>
+
 </div>
 
 
@@ -35,7 +69,7 @@
     function upload() {
         var formData = new FormData();
         formData.append("upload_file", $("#file")[0].files[0]);
-        formData.append("id", $("#file").parent().attr("id"));
+        formData.append("id", $("#file").parent().attr("name"));
         $.ajax({
             url: "/content/upload",
             type: 'POST',
@@ -59,7 +93,7 @@
     }
 
     function menu_out(id) {
-        $("#ul"+id).css('display', 'none');
+        $("#ul" + id).css('display', 'none');
     }
 
     function get_menu_list(id) {
@@ -77,21 +111,29 @@
                 var ul = document.createElement("ul");
                 parent.appendChild(ul);
 
-                ul.setAttribute("id","ul"+id);
+                ul.setAttribute("id", "ul" + id);
+                $("#ul" + id).css('float', 'none');
                 for (var i = 0; i < list.length; i++) {
                     // 动态添加
-                    if (document.getElementById(list[i].id)==null){
+                    if (document.getElementById(list[i].id) == null) {
                         var li = document.createElement("li");
                         var a = document.createElement("a");
-                        a.setAttribute("href","#");
+                        a.setAttribute("href", list[i].href);
+                        if (list[i].href != "#") {
+                            a.setAttribute("target", "_blank");
+                        }else {
+
+                        }
+
                         li.appendChild(a);
                         li.setAttribute("id", list[i].id);
-                        li.setAttribute("onclick","display_content("+list[i].id+")");
-                        a.innerHTML=list[i].name;
+                        li.setAttribute("onclick", "display_content(" + list[i].id + ")");
+                        li.setAttribute("style", "float:none;opacity:0.8;");
+                        a.innerHTML = list[i].name;
                         ul.appendChild(li);
                     }
                 }
-                console.log(data);
+                // console.log(data);
             },
             error: function () {
                 // layer.msg("客户端请求有误");
@@ -102,51 +144,70 @@
 
 </script>
 <script>
-    function display_content(id){
+    function display_content(id) {
         $.ajax({
             url: "/content/get_content",
             type: "POST",
             data: {
-                contentId:id
-                    // $("#content_main").attr("name")
+                menuId: id
+                // $("#content_main").attr("name")
                 // contentId:100001
             },
             success: function (data) {
-                var jsn_content = data.data;
-                console.log(jsn_content);
+                var jsn_content = data.data.content;
+                var jsn_enclo = data.data.enclosuresList;
+                var content_main = document.getElementById("content_main");
+
+                content_main.setAttribute("name",jsn_content.id);
+                // console.log(jsn_content);
 
                 if (jsn_content.img != null && jsn_content.img != "") {
-                    console.log(jsn_content.img);
-                    display_frame("jsn_img",jsn_content.img);
+                    // console.log(jsn_content.img);
+                    display_frame("jsn_img", jsn_content.img);
                 }
                 if (jsn_content.code != null && jsn_content.code != "") {
-                    console.log(jsn_content.code);
-                    display_frame("jsn_code",jsn_content.code);
+                    // console.log(jsn_content.code);
+                    display_frame("jsn_code", jsn_content.code);
                 }
                 if (jsn_content.text != null && jsn_content.text != "") {
-                    console.log(jsn_content.text);
-                    display_frame("jsn_text",jsn_content.text);
+                    // console.log(jsn_content.text);
+                    display_frame("jsn_text", jsn_content.text);
                 }
                 if (jsn_content.video != null && jsn_content.video != "") {
-                    console.log(jsn_content.video);
-                    display_frame("jsn_video",jsn_content.video);
+                    // console.log(jsn_content.video);
+                    display_frame("jsn_video", jsn_content.video);
                 }
+
+
+                display_enclo(jsn_enclo);
                 console.info(data);
             },
             error: function () {
                 alert($("#content_main").attr("name"));
             }
         });
-        function display_frame(frame_id,src_value){
+
+        function display_frame(frame_id, src_value) {
             var frame = document.getElementById(frame_id);
             frame.setAttribute("src", src_value);
-            $("#"+frame_id).css('display','block');
+            $("#" + frame_id).css('display', 'block');
             frame.contentWindow.location.reload(true);
+        }
+
+        function display_enclo(enclo) {
+            var parent = document.getElementById("enclosure");
+            for (var i = 0; i < enclo.length; i++) {
+                var a = document.createElement("a");
+                var br = document.createElement("br");
+                a.setAttribute("href", "/file/download?url=" + enclo[i].url + "&fileName=" + enclo[i].name);
+                a.innerHTML = enclo[i].name;
+                parent.appendChild(br);
+                parent.appendChild(a);
+            }
         }
     }
 </script>
 <script>
-
     $.ajax({
         url: "/menu/data",
         type: "GET",
@@ -163,12 +224,12 @@
                 //动态添加DIV
                 var li = document.createElement("li");
 
-                var a=document.createElement("a");
-                a.setAttribute("href","https://www.baidu.com");
+                var a = document.createElement("a");
+                a.setAttribute("href", "#");
                 li.appendChild(a);
                 li.setAttribute("id", list[i].id);
-                li.setAttribute("onmouseover","menu_over(id)");
-                li.setAttribute("onmouseout","menu_out(id)");
+                li.setAttribute("onmouseover", "menu_over(id)");
+                li.setAttribute("onmouseout", "menu_out(id)");
                 // li.innerHTML = list[i].name;
                 a.innerHTML = list[i].name;
                 parent.appendChild(li);
@@ -180,5 +241,31 @@
             alert("客户端请求有误")
         }
     });
+</script>
+
+<script>
+    function upload_enclo() {
+        var formData = new FormData();
+        formData.append("enclosure", $("#enclosure_file")[0].files[0]);
+        formData.append("contentId", $("#enclosure").parent().attr("name"));
+        $.ajax({
+            url: "/content/upload_enclosure",
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,//这个很有必要，不然不行
+            dataType: "json",
+            mimeType: "multipart/form-data",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () {
+                alert("客户端请求有误")
+            }
+        });
+    }
+</script>
+<script>
+
 </script>
 </html>

@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Content {
     private long id;
-    private long parentId;
+    private long menuId;
     private long userId;
     private String text;//文本或文本
     private String img;//图片
@@ -26,20 +26,20 @@ public class Content {
         this.id = id;
     }
 
-    public long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(long parentId) {
-        this.parentId = parentId;
-    }
-
     public long getUserId() {
         return userId;
     }
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(long menuId) {
+        this.menuId = menuId;
     }
 
     public String getText() {
@@ -111,7 +111,7 @@ public class Content {
     public String toString() {
         return "Content{" +
                 "id=" + id +
-                ", parentId=" + parentId +
+                ", menuId=" + menuId +
                 ", userId=" + userId +
                 ", text='" + text + '\'' +
                 ", img='" + img + '\'' +

@@ -1,8 +1,12 @@
 package com.ccsu.jsn.controller;
 
 import com.ccsu.jsn.common.Result;
+import com.ccsu.jsn.pojo.User;
 import com.ccsu.jsn.service.IContentService;
 import com.ccsu.jsn.service.IFileService;
+import com.ccsu.jsn.service.impl.ContentServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.lang.reflect.Method;
 
 /**
  * @Description 控制知识点主题的上传下载浏览
@@ -22,34 +28,52 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("content")
 public class ContentController {
-
+    Logger logger = LoggerFactory.getLogger(ContentController.class);
     @Autowired
     private IContentService contentService;
 
+    /**上传展示内容主体*/
     @RequestMapping(value = "upload",method = RequestMethod.POST)
     @ResponseBody
     public Result upload(@RequestParam(value = "upload_file") MultipartFile file,
                          @RequestParam(value = "id") long id,
-                         HttpServletRequest request){
+                         HttpSession session){
         /**
          * 将文件上传
          * 成功后将路径信息写入数据库
          */
-        System.out.println("已进入上传控制器");
-        String path = request.getSession().getServletContext().getRealPath("upload");
-        System.out.println("在控制层"+path);
-        contentService.upload(file,path);
-        System.out.println("已结束上传");
+        String path = session.getServletContext().getRealPath("upload");
+        logger.warn("上传的路径为：{}",path);
+        User user =(User) session.getAttribute("user");
+        logger.warn("登陆的用户为：{}",user);
+        logger.warn("前端传入的id为：{}",id);
+//        System.out.println("在控制层"+path);
+        contentService.upload(file,path,id,user.getPhone());
+//        System.out.println("已结束上传");
         return Result.success(0);
     }
 
     @RequestMapping(value = "get_content",method = RequestMethod.POST)
     @ResponseBody
-    public Result getContent(@RequestParam("contentId") long contentId){
+    public Result getContent(@RequestParam("menuId") long menuId){
 
-        System.out.println("id号为："+contentId);
+        System.out.println("id号为："+menuId);
 
-        return contentService.getContent(contentId);
+        return contentService.getContent(menuId);
+    }
+
+    @RequestMapping(value = "upload_enclosure",method = RequestMethod.POST)
+    @ResponseBody
+    public Result uploadEnclosure(
+            @RequestParam(value = "enclosure") MultipartFile file,
+            @RequestParam(value = "contentId") long contentId,
+            HttpSession session
+
+    ){
+        String path = session.getServletContext().getRealPath("upload");
+        User user =(User) session.getAttribute("user");
+        logger.info("已经进入方法：{}，contentId={}",Thread.currentThread().getStackTrace()[1].getMethodName(),contentId);
+        return contentService.uploadEnclosure(file,contentId,path,user.getPhone());
     }
 
     @RequestMapping(value = "content_view")

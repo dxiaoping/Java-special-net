@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.jsn.dao.EnclosuresMapper">
+    <resultMap id="enclosures" type="com.ccsu.jsn.pojo.Enclosures">
+        <result property="id" column="id"/>
+        <result property="contentId" column="content_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="url" column="url"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    <parameterMap id="enclosurePar" type="com.ccsu.jsn.pojo.Enclosures">
+        <parameter property="id"/>
+        <parameter property="contentId"/>
+        <parameter property="userId"/>
+        <parameter property="name"/>
+        <parameter property="url"/>
+        <parameter property="createTime"/>
+    </parameterMap>
+    <select id="getEnclosuresListByContentId" parameterType="long" resultMap="enclosures">
+        select id,content_id,user_id,name,url,create_time
+        from enclosures where content_id=#{contentId}
+    </select>
+    <insert id="insert" parameterMap="enclosurePar">
+        insert into enclosures(id,content_id,user_id,name,url,create_time)
+        values (#{id},#{contentId},#{userId},#{name},#{url},#{createTime})
+      </insert>
+    <select id="selectById" parameterType="long" resultMap="enclosures">
+        select * from enclosures where id=#{id}
+    </select>
+</mapper>

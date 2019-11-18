@@ -8,9 +8,10 @@ import java.util.Date;
  * @create 2019-11-02 18:21
  */
 
+
 public class Enclosures {
     private long id;
-    private long parentId;
+    private long contentId;
     private long userId;
     private String name;
     private String url;
@@ -24,12 +25,12 @@ public class Enclosures {
         this.id = id;
     }
 
-    public long getParentId() {
-        return parentId;
+    public long getContentId() {
+        return contentId;
     }
 
-    public void setParentId(long parentId) {
-        this.parentId = parentId;
+    public void setContentId(long contentId) {
+        this.contentId = contentId;
     }
 
     public long getUserId() {
@@ -68,7 +69,7 @@ public class Enclosures {
     public String toString() {
         return "Enclosures{" +
                 "id=" + id +
-                ", parentId=" + parentId +
+                ", contentId=" + contentId +
                 ", userId=" + userId +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +

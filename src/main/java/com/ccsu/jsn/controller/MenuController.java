@@ -37,11 +37,10 @@ public class MenuController {
     @RequestMapping("data")
     @ResponseBody
     public Result<List<Menu>> menu(@RequestParam("menuId") int menuId) {
-        System.out.println(menuId);
+//        System.out.println(menuId);
         long id = menuId;
         return Result.success(menuService.getMenuList(id));
     }
-
     @RequestMapping("menu_view")
     public String menuView() {
         return "menu";

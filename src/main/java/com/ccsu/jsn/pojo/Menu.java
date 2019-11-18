@@ -11,6 +11,7 @@ public class Menu {
     private long id;
     private long parentId;
     private String name;
+    private String href;
     private Date createTime;
     private Date updateTime;
 
@@ -52,6 +53,14 @@ public class Menu {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 
     @Override

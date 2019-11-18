@@ -22,5 +22,6 @@
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/MenuMapper.xml"/>
         <mapper resource="mapper/ContentMapper.xml"/>
+        <mapper resource="mapper/EnclosuresMapper.xml"/>
     </mappers>
 </configuration>
