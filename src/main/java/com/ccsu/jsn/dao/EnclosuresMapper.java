@@ -8,5 +8,5 @@ import java.util.List;
 public interface EnclosuresMapper {
     List<Enclosures> getEnclosuresListByContentId(long contentId);
     int insert(Enclosures enclosures);
-    int selectById(long id);
+    Enclosures selectById(long id);
 }

@@ -28,6 +28,7 @@
         values (#{id},#{contentId},#{userId},#{name},#{url},#{createTime})
       </insert>
     <select id="selectById" parameterType="long" resultMap="enclosures">
-        select * from enclosures where id=#{id}
+        select id,content_id,user_id,name,url,create_time
+        from enclosures where id=#{id}
     </select>
 </mapper>

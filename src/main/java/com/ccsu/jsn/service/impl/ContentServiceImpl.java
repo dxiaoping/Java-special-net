@@ -7,6 +7,7 @@ import com.ccsu.jsn.pojo.Content;
 import com.ccsu.jsn.pojo.Enclosures;
 import com.ccsu.jsn.service.IContentService;
 import com.ccsu.jsn.util.FTPUtil;
+import com.ccsu.jsn.util.IdFactory;
 import com.ccsu.jsn.vo.ContentVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,8 @@ public class ContentServiceImpl implements IContentService {
     private ContentMapper contentMapper;
     @Autowired
     private EnclosuresMapper enclosuresMapper;
+    @Autowired
+    private IdFactory idFactory;
 
     Content content = new Content();
 
@@ -57,6 +60,7 @@ public class ContentServiceImpl implements IContentService {
         Enclosures enclosures = new Enclosures();
         /**原文件名*/
         String fileName = file.getOriginalFilename();
+        logger.info("fileName=",fileName);
         String fileSuffix = fileName.substring(fileName.lastIndexOf('.') + 1);
 
         String uploadFileName = UUID.randomUUID().toString() + "." + fileSuffix;
@@ -79,11 +83,12 @@ public class ContentServiceImpl implements IContentService {
             return Result.error("上传失败");
         }
 
-        enclosures.setId(1008001);
+        enclosures.setId(idFactory.createEnclo());
         enclosures.setUserId(userId);
         enclosures.setContentId(contentId);
         enclosures.setName(fileName);
         enclosures.setUrl(url);
+        System.out.println(enclosures);
         enclosuresMapper.insert(enclosures);
 
         return Result.success(0);

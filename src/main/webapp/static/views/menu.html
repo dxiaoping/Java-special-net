@@ -257,6 +257,9 @@
             dataType: "json",
             mimeType: "multipart/form-data",
             success: function (data) {
+                if (data.msg != "success"){
+                    layer.alert(data.msg);
+                }
                 console.log(data);
             },
             error: function () {

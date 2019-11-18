@@ -34,6 +34,7 @@ function do_login() {
         },
         success: function (data) {
             if (data.msg=="success"){
+                layer.msg("成功");
 
             }else {
                 layer.msg(data.msg);

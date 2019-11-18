@@ -88,6 +88,7 @@ public class daoTest {
 
 //        enclosuresMapper.insert(enclosures);
         System.out.println(enclosuresMapper.insert(enclosures));
+        System.out.println(enclosuresMapper.selectById(100001l));
 //        sqlSession.commit();
 //        System.out.println(contentMapper.selectByParentId(1001));
 

@@ -72,7 +72,11 @@ public class ContentController {
     ){
         String path = session.getServletContext().getRealPath("upload");
         User user =(User) session.getAttribute("user");
+        if (user == null){
+            return Result.error("用户未登录");
+        }
         logger.info("已经进入方法：{}，contentId={}",Thread.currentThread().getStackTrace()[1].getMethodName(),contentId);
+
         return contentService.uploadEnclosure(file,contentId,path,user.getPhone());
     }
 
