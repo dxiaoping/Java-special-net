@@ -58,7 +58,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     private Result checkParameter(User user){
-        if (userMapper.checkPhone(user.getPhone())==0){
+        if (userMapper.checkPhone(user.getPhone()) > 0){
+            System.out.println("用户已经存在");
             return Result.error("用户已经存在");
         }
         if (user.getPassword()==null || user.getPassword().equals("")){

@@ -64,12 +64,12 @@ public class daoTest {
         content.setId(100001);
         content.setMenuId(1001);
         content.setUserId(15574902295l);
-        content.setText("textUrl");
-        content.setImg("imgUrl");
-        content.setVideo("videoUrl");
-        content.setCode("codeUrl");
+//        content.setText("textUrl");
+//        content.setImg("imgUrl");
+//        content.setVideo("videoUrl");
+//        content.setCode("codeUrl");
 
-        System.out.println(contentMapper.update(content));
+        System.out.println(contentMapper.insert(content));
 //        sqlSession.commit();
 //        System.out.println(contentMapper.selectByParentId(1001));
 
@@ -92,5 +92,11 @@ public class daoTest {
 //        sqlSession.commit();
 //        System.out.println(contentMapper.selectByParentId(1001));
 
+    }
+
+    @Test
+    public void userTest(){
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        System.out.println(userMapper.checkPhone(15574902295l));
     }
 }

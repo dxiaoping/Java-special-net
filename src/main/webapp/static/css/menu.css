@@ -70,7 +70,8 @@
 }
 .jsn_frame_style{
     width:1280px;
-    height:500px;
+    /*height:500px;*/
+    max-height: 300px;
     /*display:none;*/
     /*display: block;*/
 }
@@ -133,7 +134,9 @@
 #loginBox{
     display:none;
 }
-
+#registerBox{
+    display:none;
+}
 
 
 

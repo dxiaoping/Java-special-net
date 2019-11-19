@@ -36,8 +36,48 @@
     </select>
 
     <insert id="insert" parameterMap="contentPar">
-        insert into content (id,parent_id,user_id,text,img,video,code,create_time,update_time)
-        values (#{id},#{parentId},#{userId},#{text},#{img},#{video},#{code},#{createTime},#{updateTime})
+
+        insert into content
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="menuId != null">
+                menu_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="text != null">
+                text,
+            </if>
+            <if test="img != null">
+                img,
+            </if>
+            <if test="video != null">
+                video,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id ,jdbcType=INTEGER},</if>
+            <if test="menuId != null">#{menuId ,jdbcType=INTEGER},</if>
+            <if test="userId != null">#{userId ,jdbcType=INTEGER},</if>
+            <if test="text != null">#{text ,jdbcType=VARCHAR},</if>
+            <if test="img != null">#{img ,jdbcType=VARCHAR},</if>
+            <if test="video != null">#{video ,jdbcType=VARCHAR},</if>
+            <if test="code != null">#{code ,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime ,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime ,jdbcType=TIMESTAMP},</if>
+        </trim>
     </insert>
 
     <insert id="update" parameterMap="contentPar">

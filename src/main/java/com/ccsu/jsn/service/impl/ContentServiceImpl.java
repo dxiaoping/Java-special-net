@@ -5,6 +5,7 @@ import com.ccsu.jsn.dao.ContentMapper;
 import com.ccsu.jsn.dao.EnclosuresMapper;
 import com.ccsu.jsn.pojo.Content;
 import com.ccsu.jsn.pojo.Enclosures;
+import com.ccsu.jsn.pojo.User;
 import com.ccsu.jsn.service.IContentService;
 import com.ccsu.jsn.util.FTPUtil;
 import com.ccsu.jsn.util.IdFactory;
@@ -95,12 +96,19 @@ public class ContentServiceImpl implements IContentService {
     }
 
     @Override
-    public Result getContent(long menuId) {
+    public Result getContent(long menuId, User user) {
         ContentVo contentVo = new ContentVo();
         content = contentMapper.selectByParentId(menuId);
         if (content != null) {
             List<Enclosures> enclosuresList = enclosuresMapper.getEnclosuresListByContentId(content.getId());
             contentVo.setEnclosuresList(enclosuresList);
+        }else {
+            content = new Content();
+            content.setId(idFactory.createContent());
+            content.setUserId(user.getPhone());
+            content.setMenuId(menuId);
+            logger.info("实体不存在on {} print {}", this.getClass().getName(), content);
+            contentMapper.insert(content);
         }
         contentVo.setContent(content);
         logger.info("on {} print {}", this.getClass().getName(), content);

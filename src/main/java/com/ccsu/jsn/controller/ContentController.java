@@ -55,11 +55,14 @@ public class ContentController {
 
     @RequestMapping(value = "get_content",method = RequestMethod.POST)
     @ResponseBody
-    public Result getContent(@RequestParam("menuId") long menuId){
+    public Result getContent(@RequestParam("menuId") long menuId,
+                             HttpSession session
 
+    ){
+        User user = (User) session.getAttribute("user");
         System.out.println("id号为："+menuId);
 
-        return contentService.getContent(menuId);
+        return contentService.getContent(menuId,user);
     }
 
     @RequestMapping(value = "upload_enclosure",method = RequestMethod.POST)

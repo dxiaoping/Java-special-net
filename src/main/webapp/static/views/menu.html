@@ -17,7 +17,7 @@
     <div id="header">
         <div id="header-con">
             <div><a href="javascript:;" id="bLogin" onclick="ShowLoginText()">登录</a></div>
-            <div><a href="javascript:;" id="bReg">注册</a></div>
+            <div><a href="javascript:;" id="bReg" onclick="ShowRegisterText()">注册</a></div>
         </div>
     </div>
     <div id="errormessage">45645</div>
@@ -28,6 +28,14 @@
 
         <div class="login-item"><a onclick="Login()">登录</a></div>
     </div>
+    <div id="registerBox">
+        <div class="login-item"><input type="text" id="phone" placeholder="请输入用户名"/></div>
+        <div class="login-item"><input type="password" id="password" placeholder="请输入密码"/></div>
+        <div class="login-item"><input type="text" id="name" placeholder="请输入用户名"/></div>
+        <!--<div class="login-item"><a href="#" onclick="Login()">登录</a></div>-->
+
+        <div class="login-item"><a onclick="register()">注册</a></div>
+    </div>
     <!--================================================================================-->
 </div>
 
@@ -37,15 +45,7 @@
     <ul id="menu"></ul>
 </div>
 <div id="content_main" class="jsn_content_style">
-    <div id="enclosure">
-        <a href="/file/download?filename=842d8a86-136a-406a-b7e0-d7dbdc8ed089.java">文件下载</a>
 
-        <!--<a href="\upload\enclosures\842d8a86-136a-406a-b7e0-d7dbdc8ed089.java" style="order: 1">java代码</a><br>-->
-        <!--<a href="http://www.baidu.com" style="order: -1">百度</a><br>-->
-
-    </div>
-    <input id="enclosure_file" type="file" name="enclosure_file"/>
-    <button id="enclosure_upload" onclick="upload_enclo()">上传附件</button>
     <br>
     <!--文本-->
     <iframe id="jsn_text" name="jsn_text" class="jsn_frame_style" style="display: none"></iframe>
@@ -60,7 +60,15 @@
     <!--上传按钮,点击后判断是否会覆盖之前文件，征求用户意见-->
     <button id="upload" onclick="upload()" class="button_style">上传文件</button>
     <br><br><br><br>
+    <div id="enclosure">
+        <!--<a href="/file/download?filename=842d8a86-136a-406a-b7e0-d7dbdc8ed089.java">文件下载</a>-->
 
+        <!--<a href="\upload\enclosures\842d8a86-136a-406a-b7e0-d7dbdc8ed089.java" style="order: 1">java代码</a><br>-->
+        <!--<a href="http://www.baidu.com" style="order: -1">百度</a><br>-->
+
+    </div>
+    <input id="enclosure_file" type="file" name="enclosure_file"/>
+    <button id="enclosure_upload" onclick="upload_enclo()">上传附件</button>
 </div>
 
 
@@ -79,10 +87,11 @@
             dataType: "json",
             mimeType: "multipart/form-data",
             success: function (data) {
+                layer.alert("文件上传成功");
                 console.log(data);
             },
             error: function () {
-                alert("客户端请求有误")
+                layer.alert("上传文件时遇到错误，请检查是否登录")
             }
         });
     }
@@ -121,7 +130,7 @@
                         a.setAttribute("href", list[i].href);
                         if (list[i].href != "#") {
                             a.setAttribute("target", "_blank");
-                        }else {
+                        } else {
 
                         }
 
@@ -158,7 +167,7 @@
                 var jsn_enclo = data.data.enclosuresList;
                 var content_main = document.getElementById("content_main");
 
-                content_main.setAttribute("name",jsn_content.id);
+                content_main.setAttribute("name", jsn_content.id);
                 // console.log(jsn_content);
 
                 if (jsn_content.img != null && jsn_content.img != "") {
@@ -178,8 +187,10 @@
                     display_frame("jsn_video", jsn_content.video);
                 }
 
+                if (jsn_enclo != null && jsn_enclo.length > 0) {
+                    display_enclo(jsn_enclo);
+                }
 
-                display_enclo(jsn_enclo);
                 console.info(data);
             },
             error: function () {
@@ -257,7 +268,7 @@
             dataType: "json",
             mimeType: "multipart/form-data",
             success: function (data) {
-                if (data.msg != "success"){
+                if (data.msg != "success") {
                     layer.alert(data.msg);
                 }
                 console.log(data);

@@ -40,10 +40,21 @@ public class UserController {
 
         System.out.println();
         if (result.getData() instanceof User) {
-            session.setAttribute("user",(User)result.getData());
+            session.setAttribute("user", (User) result.getData());
         }
 
         return result;
 //        return Result.success(0);
+    }
+
+
+    @RequestMapping("register")
+    @ResponseBody
+    public Result register(@RequestParam("phone") long phone,
+                           @RequestParam("password") String password,
+                           @RequestParam("name") String name) {
+        User user = new User(phone,name,password);
+
+        return userService.register(user);
     }
 }

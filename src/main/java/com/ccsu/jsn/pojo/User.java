@@ -18,6 +18,15 @@ public class User {
     private String securityQuestion;            //密保问题
     private String securityAnswer;              //密保答案
 
+    public User() {
+    }
+
+    public User(long phone, String name, String password) {
+        this.phone = phone;
+        this.name = name;
+        this.password = password;
+    }
+
     public int getRole() {
         return role;
     }
