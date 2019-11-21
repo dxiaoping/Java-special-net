@@ -1,5 +1,6 @@
 package com.ccsu.jsn.controller;
 
+import com.ccsu.jsn.common.Const;
 import com.ccsu.jsn.common.Result;
 import com.ccsu.jsn.pojo.User;
 import com.ccsu.jsn.service.IContentService;
@@ -44,7 +45,7 @@ public class ContentController {
          */
         String path = session.getServletContext().getRealPath("upload");
         logger.warn("上传的路径为：{}",path);
-        User user =(User) session.getAttribute("user");
+        User user =(User) session.getAttribute(Const.CURRENT_USER);
         logger.warn("登陆的用户为：{}",user);
         logger.warn("前端传入的id为：{}",id);
 //        System.out.println("在控制层"+path);
@@ -59,7 +60,7 @@ public class ContentController {
                              HttpSession session
 
     ){
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
         System.out.println("id号为："+menuId);
 
         return contentService.getContent(menuId,user);
@@ -74,7 +75,7 @@ public class ContentController {
 
     ){
         String path = session.getServletContext().getRealPath("upload");
-        User user =(User) session.getAttribute("user");
+        User user =(User) session.getAttribute(Const.CURRENT_USER);
         if (user == null){
             return Result.error("用户未登录");
         }

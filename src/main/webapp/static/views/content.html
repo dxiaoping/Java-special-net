@@ -10,14 +10,16 @@
 <body>
 <div id="content_main" name="100001" class="jsn_content_style">
 
-    <!--文本-->
-    <iframe id="jsn_text" name="jsn_text" class="jsn_frame_style" style="display: none"></iframe>
-    <!--视频框-->
-    <iframe id="jsn_video" name="jsn_video" class="jsn_frame_style" style="display: none"></iframe>
-    <!--图片框-->
-    <iframe id="jsn_img" name="jsn_img" class="jsn_frame_style" style="display: none"></iframe>
-    <!--代码栏-->
-    <iframe id="jsn_code" name="jsn_code" class="jsn_frame_style" style="display: none"></iframe>
+    <!--实例题目-->
+    <h1 id="title"></h1>
+    <!--实例内容-->
+    <div>放置示例代码</div>
+    <!--实例讲解-->
+    <div>实例文档</div>
+    <!--运行结果 截图-->
+    <div>图片</div>
+    <!--代码附件-->
+    <div></div>
     <!--文件上传-->
     <input id="file" type="file" name="file"/>
     <!--上传按钮,点击后判断是否会覆盖之前文件，征求用户意见-->
@@ -39,19 +41,19 @@
 
             if (jsn_content.img != null && jsn_content.img != "") {
                 console.log(jsn_content.img);
-                display_frame("jsn_img",jsn_content.img);
+                display_frame("jsn_img", jsn_content.img);
             }
             if (jsn_content.code != null && jsn_content.code != "") {
                 console.log(jsn_content.code);
-                display_frame("jsn_code",jsn_content.code);
+                display_frame("jsn_code", jsn_content.code);
             }
             if (jsn_content.text != null && jsn_content.text != "") {
                 console.log(jsn_content.text);
-                display_frame("jsn_text",jsn_content.text);
+                display_frame("jsn_text", jsn_content.text);
             }
             if (jsn_content.video != null && jsn_content.video != "") {
                 console.log(jsn_content.video);
-                display_frame("jsn_video",jsn_content.video);
+                display_frame("jsn_video", jsn_content.video);
             }
             console.info(data);
         },
@@ -59,10 +61,11 @@
             alert($("#content_main").attr("name"))
         }
     });
-    function display_frame(frame_id,src_value){
+
+    function display_frame(frame_id, src_value) {
         var frame = document.getElementById(frame_id);
         frame.setAttribute("src", src_value);
-        $("#"+frame_id).css('display','block');
+        $("#" + frame_id).css('display', 'block');
         frame.contentWindow.location.reload(true);
     }
 </script>

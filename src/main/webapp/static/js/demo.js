@@ -6,7 +6,13 @@ function ShowLoginText() {
         content: $("#loginBox"),
     });
 }
-function ShowRegisterText() {
+function ShowRegisterText(role) {
+
+    $("#add-admin").css("display","none");
+    $("#reg").css("display","none");
+    $("#add-teacher").css("display","none");
+    $("#"+role).css("display","block");
+
     layer.open({
         type: 1,
         title: "注册",
@@ -15,7 +21,28 @@ function ShowRegisterText() {
     });
 }
 
-
+function OutLogin() {
+    $.ajax({
+        url: "/user/out_login",
+        type: "GET",
+        data:{},
+        success: function (data) {
+            if (data.msg=="success"){
+                $("#display-user").css("display","none");
+                $("#out-login").css("display","none");
+                $("#bLogin").css("display","block");
+                $("#bReg").css("display","block");
+                layer.closeAll();
+            }else {
+                layer.msg(data.msg);
+            }
+            console.log(data);
+        },
+        error: function () {
+            layer.msg("注销时遇到系统错误");
+        }
+    });
+}
 
 function Login() {
     var phone = $.trim($("#InputUsername").val());//获取用户名trim是去掉空格
@@ -32,7 +59,7 @@ function Login() {
     }
 }
 
-function register() {
+function register(role) {
     var phone = $.trim($("#phone").val());//获取用户名trim是去掉空格
     var password = $.trim($("#password").val());//获取密码
     var name = $.trim($("#name").val());//获取用户名
@@ -43,7 +70,8 @@ function register() {
         data: {
             phone:phone,
             password:password,
-            name:name
+            name:name,
+            role:role
         },
         success: function (data) {
             if (data.msg=="success"){
@@ -72,7 +100,20 @@ function do_login() {
         },
         success: function (data) {
             if (data.msg=="success"){
+                var user = data.data;
                 layer.msg("成功");
+                $("#display-user").css("display","block");
+                $("#out-login").css("display","block");
+                $("#bLogin").css("display","none");
+                $("#bReg").css("display","none");
+                $("#user").text(user.name);
+                if (user.role==0){
+                    $("#add-tea").css("display","block");
+                    $("#add-adm").css("display","block");
+                }else {
+                    $("#add-tea").css("display","none");
+                    $("#add-adm").css("display","none");
+                }
 
             }else {
                 layer.msg(data.msg);

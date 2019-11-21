@@ -16,11 +16,14 @@
     <!--登录弹窗-->
     <div id="header">
         <div id="header-con">
-            <div><a href="javascript:;" id="bLogin" onclick="ShowLoginText()">登录</a></div>
-            <div><a href="javascript:;" id="bReg" onclick="ShowRegisterText()">注册</a></div>
+            <div id="bLogin" ><a href="javascript:;" onclick="ShowLoginText()">登录</a></div>
+            <div id="bReg" ><a href="javascript:;" onclick="ShowRegisterText('reg')">注册</a></div>
+            <div id="out-login" style="display: none"><a href="javascript:;"  onclick="OutLogin()">注销</a></div>
+            <div id="add-tea" style="display: none"><a href="javascript:;"  onclick="ShowRegisterText('add-teacher')">添加教师</a></div>
+            <div id="add-adm" style="display: none"><a href="javascript:;"  onclick="ShowRegisterText('add-admin')">添加管理员</a></div>
+            <div id="display-user" style="display: none"><a href="javascript:;">欢迎用户<span id="user"/> 登录</a></div>
         </div>
     </div>
-    <div id="errormessage">45645</div>
     <div id="loginBox">
         <div class="login-item"><input type="text" id="InputUsername" placeholder="请输入用户名"/></div>
         <div class="login-item"><input type="password" id="InputUserPwd" placeholder="请输入密码"/></div>
@@ -33,9 +36,12 @@
         <div class="login-item"><input type="password" id="password" placeholder="请输入密码"/></div>
         <div class="login-item"><input type="text" id="name" placeholder="请输入用户名"/></div>
         <!--<div class="login-item"><a href="#" onclick="Login()">登录</a></div>-->
-
-        <div class="login-item"><a onclick="register()">注册</a></div>
+        <div id="reg" class="login-item"><a onclick="register(2)">注册</a></div>
+        <div id="add-teacher" class="login-item"><a onclick="register(1)">添加教师</a></div>
+        <div id="add-admin" class="login-item"><a onclick="register(0)">添加管理员</a></div>
     </div>
+
+
     <!--================================================================================-->
 </div>
 
@@ -46,15 +52,28 @@
 </div>
 <div id="content_main" class="jsn_content_style">
 
-    <br>
-    <!--文本-->
-    <iframe id="jsn_text" name="jsn_text" class="jsn_frame_style" style="display: none"></iframe>
-    <!--视频框-->
-    <iframe id="jsn_video" name="jsn_video" class="jsn_frame_style" style="display: none"></iframe>
-    <!--图片框-->
-    <iframe id="jsn_img" name="jsn_img" class="jsn_frame_style" style="display: none"></iframe>
+    <!--实例题目-->
+    <h1 id="title" style="font-size: 36px;text-align: left;: "></h1>
     <!--代码栏-->
-    <iframe id="jsn_code" name="jsn_code" class="jsn_frame_style" style="display: none"></iframe>
+    <div style="display: none">
+        <h2>示例代码</h2>
+        <iframe id="jsn_code" name="jsn_code" class="jsn_frame_style" style="display: none"></iframe>
+    </div>
+    <!--文本-->
+    <div style="display: none">
+        <h2>实例讲解</h2>
+        <iframe id="jsn_text" name="jsn_text" class="jsn_frame_style"></iframe>
+    </div>
+    <!--视频框-->
+    <div style="display: none">
+        <iframe id="jsn_video" name="jsn_video" class="jsn_frame_style"></iframe>
+    </div>
+    <!--图片框-->
+    <div style="display: none">
+        <h2>运行结果</h2>
+        <iframe id="jsn_img" name="jsn_img" class="jsn_frame_style"></iframe>
+    </div>
+
     <!--文件上传-->
     <input id="file" type="file" name="file"/>
     <!--上传按钮,点击后判断是否会覆盖之前文件，征求用户意见-->
@@ -163,45 +182,51 @@
                 // contentId:100001
             },
             success: function (data) {
-                var jsn_content = data.data.content;
-                var jsn_enclo = data.data.enclosuresList;
-                var content_main = document.getElementById("content_main");
+                if (data.msg == "success") {
+                    var jsn_content = data.data.content;
+                    var jsn_enclo = data.data.enclosuresList;
+                    var content_main = document.getElementById("content_main");
+                    $("#title").text(jsn_content.name);
+                    content_main.setAttribute("name", jsn_content.id);
+                    // console.log(jsn_content);
 
-                content_main.setAttribute("name", jsn_content.id);
-                // console.log(jsn_content);
+                    if (jsn_content.img != null && jsn_content.img != "") {
+                        // console.log(jsn_content.img);
+                        display_frame("jsn_img", jsn_content.img);
+                    }
+                    if (jsn_content.code != null && jsn_content.code != "") {
+                        // console.log(jsn_content.code);
+                        display_frame("jsn_code", jsn_content.code);
+                    }
+                    if (jsn_content.text != null && jsn_content.text != "") {
+                        // console.log(jsn_content.text);
+                        display_frame("jsn_text", jsn_content.text);
+                    }
+                    if (jsn_content.video != null && jsn_content.video != "") {
+                        // console.log(jsn_content.video);
+                        display_frame("jsn_video", jsn_content.video);
+                    }
 
-                if (jsn_content.img != null && jsn_content.img != "") {
-                    // console.log(jsn_content.img);
-                    display_frame("jsn_img", jsn_content.img);
-                }
-                if (jsn_content.code != null && jsn_content.code != "") {
-                    // console.log(jsn_content.code);
-                    display_frame("jsn_code", jsn_content.code);
-                }
-                if (jsn_content.text != null && jsn_content.text != "") {
-                    // console.log(jsn_content.text);
-                    display_frame("jsn_text", jsn_content.text);
-                }
-                if (jsn_content.video != null && jsn_content.video != "") {
-                    // console.log(jsn_content.video);
-                    display_frame("jsn_video", jsn_content.video);
+                    if (jsn_enclo != null && jsn_enclo.length > 0) {
+                        display_enclo(jsn_enclo);
+                    }
+                } else {
+                    layer.alert(data.msg);
                 }
 
-                if (jsn_enclo != null && jsn_enclo.length > 0) {
-                    display_enclo(jsn_enclo);
-                }
 
                 console.info(data);
             },
             error: function () {
-                alert($("#content_main").attr("name"));
+                layer.alert("请求内容实体时遇到一个错误");
             }
         });
 
         function display_frame(frame_id, src_value) {
             var frame = document.getElementById(frame_id);
             frame.setAttribute("src", src_value);
-            $("#" + frame_id).css('display', 'block');
+            // $("#" + frame_id).css('display', 'block');
+            $("#" + frame_id).parent().css('display', 'block')
             frame.contentWindow.location.reload(true);
         }
 

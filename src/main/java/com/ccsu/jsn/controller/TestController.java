@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * @Description
@@ -18,34 +20,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("login")
 public class TestController {
 
+    @RequestMapping(value = "/remove_session", method = RequestMethod.GET)
+    public void removeSession(HttpSession session) {
+        session.invalidate();
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-    @RequestMapping(value = "/hello",method = RequestMethod.GET)
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
     @ResponseBody
-    public String test(){
+    public String test() {
         return "hello";
     }
 
-    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
 //    @ResponseBody
-    public String index(){
+    public String index() {
         return "index";
     }
 
 
-    @RequestMapping(value = "get_user",produces = {"application/json; charset=UTF-8"},method = RequestMethod.GET)
+    @RequestMapping(value = "get_user", produces = {"application/json; charset=UTF-8"}, method = RequestMethod.GET)
     @ResponseBody
-    public Result<User> getUser(){
+    public Result<User> getUser() {
         User user = new User();
         user.setPhone(15574902299l);
         user.setPassword("qweasdzxc");

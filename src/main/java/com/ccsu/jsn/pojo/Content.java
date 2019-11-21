@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Content {
     private long id;
+    private String name;
     private long menuId;
     private long userId;
     private String text;//文本或文本
@@ -88,6 +89,14 @@ public class Content {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void set(String key, String value) {

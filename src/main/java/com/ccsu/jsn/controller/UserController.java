@@ -1,5 +1,6 @@
 package com.ccsu.jsn.controller;
 
+import com.ccsu.jsn.common.Const;
 import com.ccsu.jsn.common.Result;
 import com.ccsu.jsn.pojo.User;
 import com.ccsu.jsn.service.IUserService;
@@ -40,7 +41,7 @@ public class UserController {
 
         System.out.println();
         if (result.getData() instanceof User) {
-            session.setAttribute("user", (User) result.getData());
+            session.setAttribute(Const.CURRENT_USER, (User) result.getData());
         }
 
         return result;
@@ -52,9 +53,33 @@ public class UserController {
     @ResponseBody
     public Result register(@RequestParam("phone") long phone,
                            @RequestParam("password") String password,
-                           @RequestParam("name") String name) {
-        User user = new User(phone,name,password);
+                           @RequestParam("name") String name,
+                           @RequestParam("role") int role,
+                           HttpSession session) {
 
+        if (role < Const.Role.ROLE_STUDENT) {
+            System.out.println("注册用户非学生");
+            User admin = (User) session.getAttribute(Const.CURRENT_USER);
+            logger.info("获取登录用户；{}",admin);
+            if (admin == null){
+                return Result.error("请登录管理员");
+            }
+            if (admin.getRole() != Const.Role.ROLE_ADMIN) {
+                return Result.error("用户非管理员");
+            }
+        }
+        User user = new User(phone, name, password, role);
         return userService.register(user);
+    }
+
+    @RequestMapping(value = "/out_login", method = RequestMethod.GET)
+    @ResponseBody
+    public Result outLogin(HttpSession session) {
+        session.invalidate();
+        if (session.getAttribute(Const.CURRENT_USER) == null){
+            return Result.success(0);
+        }else {
+            return Result.error("注销失败");
+        }
     }
 }

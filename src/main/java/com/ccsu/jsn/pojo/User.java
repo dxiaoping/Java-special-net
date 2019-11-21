@@ -21,10 +21,11 @@ public class User {
     public User() {
     }
 
-    public User(long phone, String name, String password) {
+    public User(long phone, String name, String password,int role) {
         this.phone = phone;
         this.name = name;
         this.password = password;
+        this.role = role;
     }
 
     public int getRole() {

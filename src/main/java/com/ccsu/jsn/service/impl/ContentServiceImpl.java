@@ -1,10 +1,13 @@
 package com.ccsu.jsn.service.impl;
 
+import com.ccsu.jsn.common.Const;
 import com.ccsu.jsn.common.Result;
 import com.ccsu.jsn.dao.ContentMapper;
 import com.ccsu.jsn.dao.EnclosuresMapper;
+import com.ccsu.jsn.dao.MenuMapper;
 import com.ccsu.jsn.pojo.Content;
 import com.ccsu.jsn.pojo.Enclosures;
+import com.ccsu.jsn.pojo.Menu;
 import com.ccsu.jsn.pojo.User;
 import com.ccsu.jsn.service.IContentService;
 import com.ccsu.jsn.util.FTPUtil;
@@ -37,13 +40,16 @@ public class ContentServiceImpl implements IContentService {
     private ContentMapper contentMapper;
     @Autowired
     private EnclosuresMapper enclosuresMapper;
+
+    @Autowired
+    private MenuMapper menuMapper;
     @Autowired
     private IdFactory idFactory;
 
     Content content = new Content();
 
     @Override
-    public Result upload(MultipartFile file, String path, long id,long userId) {
+    public Result upload(MultipartFile file, String path, long id, long userId) {
         initFileClass();
 
         if ("success".equals(fileUpload(file, path).getMsg())) {
@@ -57,11 +63,11 @@ public class ContentServiceImpl implements IContentService {
     }
 
     @Override
-    public Result uploadEnclosure(MultipartFile file, long contentId, String path,long userId) {
+    public Result uploadEnclosure(MultipartFile file, long contentId, String path, long userId) {
         Enclosures enclosures = new Enclosures();
         /**原文件名*/
         String fileName = file.getOriginalFilename();
-        logger.info("fileName=",fileName);
+        logger.info("fileName=", fileName);
         String fileSuffix = fileName.substring(fileName.lastIndexOf('.') + 1);
 
         String uploadFileName = UUID.randomUUID().toString() + "." + fileSuffix;
@@ -102,11 +108,16 @@ public class ContentServiceImpl implements IContentService {
         if (content != null) {
             List<Enclosures> enclosuresList = enclosuresMapper.getEnclosuresListByContentId(content.getId());
             contentVo.setEnclosuresList(enclosuresList);
-        }else {
+        } else {
+            if (user == null || user.getRole() == Const.Role.ROLE_STUDENT) {
+                return Result.error("该页面没有任何资料，请联系教师或管理员上传");
+            }
+            Menu menu = menuMapper.selectById(menuId);
             content = new Content();
             content.setId(idFactory.createContent());
             content.setUserId(user.getPhone());
             content.setMenuId(menuId);
+            content.setName(menu.getName());
             logger.info("实体不存在on {} print {}", this.getClass().getName(), content);
             contentMapper.insert(content);
         }
