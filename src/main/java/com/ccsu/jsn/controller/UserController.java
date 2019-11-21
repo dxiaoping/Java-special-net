@@ -60,8 +60,8 @@ public class UserController {
         if (role < Const.Role.ROLE_STUDENT) {
             System.out.println("注册用户非学生");
             User admin = (User) session.getAttribute(Const.CURRENT_USER);
-            logger.info("获取登录用户；{}",admin);
-            if (admin == null){
+            logger.info("获取登录用户；{}", admin);
+            if (admin == null) {
                 return Result.error("请登录管理员");
             }
             if (admin.getRole() != Const.Role.ROLE_ADMIN) {
@@ -72,14 +72,14 @@ public class UserController {
         return userService.register(user);
     }
 
-    @RequestMapping(value = "/out_login", method = RequestMethod.GET)
+    @RequestMapping(value = "out_login", method = RequestMethod.GET)
     @ResponseBody
     public Result outLogin(HttpSession session) {
+        System.out.println("开始注销");
+        System.out.println(session);
         session.invalidate();
-        if (session.getAttribute(Const.CURRENT_USER) == null){
-            return Result.success(0);
-        }else {
-            return Result.error("注销失败");
-        }
+
+        return Result.success(0);
+
     }
 }

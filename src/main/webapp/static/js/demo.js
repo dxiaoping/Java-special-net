@@ -21,7 +21,7 @@ function ShowRegisterText(role) {
     });
 }
 
-function OutLogin() {
+function logout() {
     $.ajax({
         url: "/user/out_login",
         type: "GET",
@@ -29,7 +29,9 @@ function OutLogin() {
         success: function (data) {
             if (data.msg=="success"){
                 $("#display-user").css("display","none");
-                $("#out-login").css("display","none");
+                $("#logout").css("display","none");
+                $("#add-tea").css("display","none");
+                $("#add-adm").css("display","none");
                 $("#bLogin").css("display","block");
                 $("#bReg").css("display","block");
                 layer.closeAll();
@@ -103,7 +105,7 @@ function do_login() {
                 var user = data.data;
                 layer.msg("成功");
                 $("#display-user").css("display","block");
-                $("#out-login").css("display","block");
+                $("#logout").css("display","block");
                 $("#bLogin").css("display","none");
                 $("#bReg").css("display","none");
                 $("#user").text(user.name);
@@ -124,4 +126,8 @@ function do_login() {
             alert("客户端请求有误")
         }
     });
+}
+
+function refresh() {
+//    获取当前状态展示前台
 }
