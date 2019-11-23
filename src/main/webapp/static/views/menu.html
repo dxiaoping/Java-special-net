@@ -8,19 +8,21 @@
     <!--=====================================-->
     <!--<link href="style.css" rel="stylesheet" type="text/css" />-->
     <script src="/static/js/layer-v3.1.1/layer/layer.js"></script>
-    <script src="/static/js/demo.js"></script>
+    <script src="/static/js/jsn.js"></script>
 </head>
-<body>
+<body onload="refresh()">
 <div style="display: flex;">
     <!--<div>-->
     <!--登录弹窗-->
     <div id="header">
         <div id="header-con">
-            <div id="bLogin" ><a href="javascript:;" onclick="ShowLoginText()">登录</a></div>
-            <div id="bReg" ><a href="javascript:;" onclick="ShowRegisterText('reg')">注册</a></div>
-            <div id="logout" style="display: none"><a href="javascript:;"  onclick="logout()">注销</a></div>
-            <div id="add-tea" style="display: none"><a href="javascript:;"  onclick="ShowRegisterText('add-teacher')">添加教师</a></div>
-            <div id="add-adm" style="display: none"><a href="javascript:;"  onclick="ShowRegisterText('add-admin')">添加管理员</a></div>
+            <div id="bLogin"><a href="javascript:;" onclick="ShowLoginText()">登录</a></div>
+            <div id="bReg"><a href="javascript:;" onclick="ShowRegisterText('reg')">注册</a></div>
+            <div id="logout" style="display: none"><a href="javascript:;" onclick="logout()">注销</a></div>
+            <div id="add-tea" style="display: none"><a href="javascript:;" onclick="ShowRegisterText('add-teacher')">添加教师</a>
+            </div>
+            <div id="add-adm" style="display: none"><a href="javascript:;"
+                                                       onclick="ShowRegisterText('add-admin')">添加管理员</a></div>
             <div id="display-user" style="display: none"><a href="javascript:;">欢迎用户<span id="user"/> 登录</a></div>
         </div>
     </div>
@@ -32,7 +34,7 @@
         <div class="login-item"><a onclick="Login()">登录</a></div>
     </div>
     <div id="registerBox">
-        <div class="login-item"><input type="text" id="phone" placeholder="请输入用户名"/></div>
+        <div class="login-item"><input type="text" id="phone" placeholder="请输入手机号"/></div>
         <div class="login-item"><input type="password" id="password" placeholder="请输入密码"/></div>
         <div class="login-item"><input type="text" id="name" placeholder="请输入用户名"/></div>
         <!--<div class="login-item"><a href="#" onclick="Login()">登录</a></div>-->
@@ -57,7 +59,9 @@
     <!--代码栏-->
     <div style="display: none">
         <h2>示例代码</h2>
-        <iframe id="jsn_code" name="jsn_code" class="jsn_frame_style" style="display: none"></iframe>
+        <iframe id="jsn_code" name="jsn_code" class="jsn_frame_style">
+
+        </iframe>
     </div>
     <!--文本-->
     <div style="display: none">
@@ -74,20 +78,21 @@
         <iframe id="jsn_img" name="jsn_img" class="jsn_frame_style"></iframe>
     </div>
 
-    <!--文件上传-->
-    <input id="file" type="file" name="file"/>
-    <!--上传按钮,点击后判断是否会覆盖之前文件，征求用户意见-->
-    <button id="upload" onclick="upload()" class="button_style">上传文件</button>
-    <br><br><br><br>
-    <div id="enclosure">
-        <!--<a href="/file/download?filename=842d8a86-136a-406a-b7e0-d7dbdc8ed089.java">文件下载</a>-->
-
-        <!--<a href="\upload\enclosures\842d8a86-136a-406a-b7e0-d7dbdc8ed089.java" style="order: 1">java代码</a><br>-->
-        <!--<a href="http://www.baidu.com" style="order: -1">百度</a><br>-->
-
+    <div id="upload_view1" style="display: none">
+        <!--文件上传-->
+        <input id="file" type="file" name="file"/>
+        <!--上传按钮,点击后判断是否会覆盖之前文件，征求用户意见-->
+        <button id="upload" onclick="upload()" class="button_style">上传文件</button>
+        <br><br><br><br>
     </div>
-    <input id="enclosure_file" type="file" name="enclosure_file"/>
-    <button id="enclosure_upload" onclick="upload_enclo()">上传附件</button>
+    <div id="enclosure">
+    </div>
+    <div id="upload_view2" style="display: none">
+        <input id="enclosure_file" type="file" name="enclosure_file"/>
+        <button id="enclosure_upload" onclick="upload_enclo()">上传附件</button>
+    </div>
+
+
 </div>
 
 
@@ -106,7 +111,12 @@
             dataType: "json",
             mimeType: "multipart/form-data",
             success: function (data) {
-                layer.alert("文件上传成功");
+                if (data.msg == "success") {
+                    layer.alert("文件上传成功");
+                } else {
+                    layer.alert(data.msg);
+                }
+
                 console.log(data);
             },
             error: function () {
@@ -155,7 +165,7 @@
 
                         li.appendChild(a);
                         li.setAttribute("id", list[i].id);
-                        li.setAttribute("onclick", "display_content(" + list[i].id + ")");
+                        li.setAttribute("onclick", "aj_display_content(" + list[i].id + ")");
                         li.setAttribute("style", "float:none;opacity:0.8;");
                         a.innerHTML = list[i].name;
                         ul.appendChild(li);
@@ -172,7 +182,7 @@
 
 </script>
 <script>
-    function display_content(id) {
+    function aj_display_content(id) {
         $.ajax({
             url: "/content/get_content",
             type: "POST",
@@ -183,64 +193,16 @@
             },
             success: function (data) {
                 if (data.msg == "success") {
-                    var jsn_content = data.data.content;
-                    var jsn_enclo = data.data.enclosuresList;
-                    var content_main = document.getElementById("content_main");
-                    $("#title").text(jsn_content.name);
-                    content_main.setAttribute("name", jsn_content.id);
-                    // console.log(jsn_content);
-
-                    if (jsn_content.img != null && jsn_content.img != "") {
-                        // console.log(jsn_content.img);
-                        display_frame("jsn_img", jsn_content.img);
-                    }
-                    if (jsn_content.code != null && jsn_content.code != "") {
-                        // console.log(jsn_content.code);
-                        display_frame("jsn_code", jsn_content.code);
-                    }
-                    if (jsn_content.text != null && jsn_content.text != "") {
-                        // console.log(jsn_content.text);
-                        display_frame("jsn_text", jsn_content.text);
-                    }
-                    if (jsn_content.video != null && jsn_content.video != "") {
-                        // console.log(jsn_content.video);
-                        display_frame("jsn_video", jsn_content.video);
-                    }
-
-                    if (jsn_enclo != null && jsn_enclo.length > 0) {
-                        display_enclo(jsn_enclo);
-                    }
+                    display_content(data);
                 } else {
                     layer.alert(data.msg);
                 }
-
-
                 console.info(data);
             },
             error: function () {
                 layer.alert("请求内容实体时遇到一个错误");
             }
         });
-
-        function display_frame(frame_id, src_value) {
-            var frame = document.getElementById(frame_id);
-            frame.setAttribute("src", src_value);
-            // $("#" + frame_id).css('display', 'block');
-            $("#" + frame_id).parent().css('display', 'block')
-            frame.contentWindow.location.reload(true);
-        }
-
-        function display_enclo(enclo) {
-            var parent = document.getElementById("enclosure");
-            for (var i = 0; i < enclo.length; i++) {
-                var a = document.createElement("a");
-                var br = document.createElement("br");
-                a.setAttribute("href", "/file/download?url=" + enclo[i].url + "&fileName=" + enclo[i].name);
-                a.innerHTML = enclo[i].name;
-                parent.appendChild(br);
-                parent.appendChild(a);
-            }
-        }
     }
 </script>
 <script>
@@ -270,6 +232,9 @@
                 a.innerHTML = list[i].name;
                 parent.appendChild(li);
             }
+
+            // display_content(1019);
+
             console.log(data);
         },
         error: function () {
@@ -303,8 +268,5 @@
             }
         });
     }
-</script>
-<script>
-
 </script>
 </html>

@@ -6,6 +6,8 @@ import com.ccsu.jsn.pojo.User;
 import com.ccsu.jsn.service.IContentService;
 import com.ccsu.jsn.service.IFileService;
 import com.ccsu.jsn.service.impl.ContentServiceImpl;
+import com.ccsu.jsn.vo.ContentVo;
+import com.ccsu.jsn.vo.RefreshVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,9 @@ public class ContentController {
         String path = session.getServletContext().getRealPath("upload");
         logger.warn("上传的路径为：{}",path);
         User user =(User) session.getAttribute(Const.CURRENT_USER);
+        if (user.getRole()==Const.Role.ROLE_STUDENT){
+            return Result.error("学生不允许上传文件");
+        }
         logger.warn("登陆的用户为：{}",user);
         logger.warn("前端传入的id为：{}",id);
 //        System.out.println("在控制层"+path);
@@ -62,8 +67,10 @@ public class ContentController {
     ){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         System.out.println("id号为："+menuId);
-
-        return contentService.getContent(menuId,user);
+        Result result = contentService.getContent(menuId,user);
+        ContentVo contentVo = (ContentVo) result.getData();
+        session.setAttribute(Const.CURRENT_CONTENT,contentVo);
+        return result;
     }
 
     @RequestMapping(value = "upload_enclosure",method = RequestMethod.POST)
@@ -82,6 +89,18 @@ public class ContentController {
         logger.info("已经进入方法：{}，contentId={}",Thread.currentThread().getStackTrace()[1].getMethodName(),contentId);
 
         return contentService.uploadEnclosure(file,contentId,path,user.getPhone());
+    }
+
+
+    @RequestMapping(value = "refresh",method = RequestMethod.POST)
+    @ResponseBody
+    public Result refresh(
+        HttpSession session
+    ){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        ContentVo contentVo = (ContentVo) session.getAttribute(Const.CURRENT_CONTENT);
+        RefreshVo refreshVo = new RefreshVo(user,contentVo);
+        return Result.success(refreshVo);
     }
 
     @RequestMapping(value = "content_view")

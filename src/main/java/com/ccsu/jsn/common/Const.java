@@ -8,6 +8,7 @@ package com.ccsu.jsn.common;
 public class Const {
 
     public static final String CURRENT_USER="CURRENT_USER";
+    public static final String CURRENT_CONTENT="CURRENT_CONTENT";
 
     public interface Role{
         int ROLE_STUDENT = 2; //学生用户
