@@ -51,6 +51,9 @@ public class ContentController {
         if (user.getRole()==Const.Role.ROLE_STUDENT){
             return Result.error("学生不允许上传文件");
         }
+        if(user.getRole()==Const.Role.ROLE_TEACHER && user.getPhone()!= contentService.getContent(id).getUserId()){
+            return Result.error("不能修改其他教师的模块");
+        }
         logger.warn("登陆的用户为：{}",user);
         logger.warn("前端传入的id为：{}",id);
 //        System.out.println("在控制层"+path);
@@ -85,6 +88,12 @@ public class ContentController {
         User user =(User) session.getAttribute(Const.CURRENT_USER);
         if (user == null){
             return Result.error("用户未登录");
+        }
+        if (user.getRole()==Const.Role.ROLE_STUDENT){
+            return Result.error("学生不允许上传文件");
+        }
+        if(user.getRole()==Const.Role.ROLE_TEACHER && user.getPhone()!= contentService.getContent(contentId).getUserId()){
+            return Result.error("不能修改其他教师的模块");
         }
         logger.info("已经进入方法：{}，contentId={}",Thread.currentThread().getStackTrace()[1].getMethodName(),contentId);
 

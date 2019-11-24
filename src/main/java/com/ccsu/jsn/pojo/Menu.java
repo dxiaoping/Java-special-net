@@ -15,6 +15,16 @@ public class Menu {
     private Date createTime;
     private Date updateTime;
 
+    public Menu() {
+    }
+
+    public Menu(long id, long parentId, String name, String href) {
+        this.id = id;
+        this.parentId = parentId;
+        this.name = name;
+        this.href = href;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }

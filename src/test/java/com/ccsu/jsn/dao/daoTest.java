@@ -99,4 +99,13 @@ public class daoTest {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         System.out.println(userMapper.checkPhone(15574902295l));
     }
+
+    @Test
+    public void menuTest(){
+        MenuMapper menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        Menu menu = new Menu(10099,106,"测试","#");
+
+        System.out.println(menuMapper.insert(menu));
+    }
 }

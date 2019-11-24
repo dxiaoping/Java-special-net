@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -40,6 +41,17 @@ public class MenuController {
 //        System.out.println(menuId);
         long id = menuId;
         return Result.success(menuService.getMenuList(id));
+    }
+
+    @RequestMapping(value = "add_menu", method = RequestMethod.POST)
+    @ResponseBody
+    public Result addMenu(
+            @RequestParam("parentMenuId") long parentMenuId,
+            @RequestParam("href") String href,
+            @RequestParam("knowledgeName") String name
+    ) {
+
+        return menuService.addNewMenu(parentMenuId,name,href);
     }
     @RequestMapping("menu_view")
     public String menuView() {

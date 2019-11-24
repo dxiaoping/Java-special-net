@@ -126,6 +126,11 @@ public class ContentServiceImpl implements IContentService {
         return Result.success(contentVo);
     }
 
+    @Override
+    public Content getContent(long contentId) {
+        return contentMapper.selectById(contentId);
+    }
+
     private void initFileClass() {
         map.put("jpg", "img");
         map.put("png", "img");

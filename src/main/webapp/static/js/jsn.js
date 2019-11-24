@@ -9,7 +9,6 @@ function ShowLoginText() {
 
 function ShowRegisterText(role) {
 
-    $("#add-admin").css("display", "none");
     $("#reg").css("display", "none");
     $("#add-teacher").css("display", "none");
     $("#" + role).css("display", "block");
@@ -29,10 +28,10 @@ function logout() {
         data: {},
         success: function (data) {
             if (data.msg == "success") {
+                window.location.reload();
                 $("#display-user").css("display", "none");
                 $("#logout").css("display", "none");
                 $("#add-tea").css("display", "none");
-                $("#add-adm").css("display", "none");
                 $("#bLogin").css("display", "block");
                 $("#bReg").css("display", "block");
                 layer.closeAll();
@@ -114,7 +113,7 @@ function do_login() {
             console.log(data);
         },
         error: function () {
-            alert("客户端请求有误")
+            layer.alert("登陆时遇到未知错误");
         }
     });
 }
@@ -142,7 +141,13 @@ function refresh() {
 }
 
 function refresh_conternt(contentVo) {
+    if (contentVo == null) {
+        return;
+    }
     var jsn_content = contentVo.content;
+    if (jsn_content == null) {
+        return;
+    }
     var jsn_enclo = contentVo.enclosuresList;
     var content_main = document.getElementById("content_main");
     $("#title").text(jsn_content.name);
@@ -194,7 +199,7 @@ function display_enclo(enclo) {
 }
 
 function display_content(data) {
-    window.location.reload()
+    window.location.reload();
     var jsn_content = data.data.content;
     var jsn_enclo = data.data.enclosuresList;
     var content_main = document.getElementById("content_main");
@@ -225,7 +230,9 @@ function display_content(data) {
 }
 
 function login_state(user) {
+
     if (user != null) {
+
 
         $("#display-user").css("display", "block");
         $("#logout").css("display", "block");
@@ -235,15 +242,24 @@ function login_state(user) {
         $("#user").text(user.name);
         if (user.role == 0) {
             $("#add-tea").css("display", "block");
-            $("#add-adm").css("display", "block");
             $("#upload_view1").css("display", "block");
             $("#upload_view2").css("display", "block");
+
+            // for (var id=101;id<=106;id++){
+            //     $("#ad"+id).css("display", "block");
+            // }
         } else if (user.role == 1) {
             $("#upload_view1").css("display", "block");
             $("#upload_view2").css("display", "block");
-        }else {
+            // for (var id=101;id<=106;id++){
+            //     $("#ad"+id).css("display", "block");
+            // }
+        } else {
             $("#upload_view1").css("display", "none");
             $("#upload_view2").css("display", "none");
+            // for (var id=101;id<=106;id++){
+            //     $("#ad"+id).css("display", "none");
+            // }
         }
 
 
@@ -252,5 +268,53 @@ function login_state(user) {
         $("#logout").css("display", "none");
         $("#bLogin").css("display", "block");
         $("#bReg").css("display", "block");
+        // for (var id=101;id<=106;id++){
+        //     $("#ad"+id).css("display", "none");
+        // }
     }
+}
+
+function add_menu(main_id) {
+    if (main_id == 106) {
+        $("#resourse_url_view").css("display", "block");
+    } else {
+        $("#resourse_url_view").css("display", "none");
+    }
+    layer.open({
+        type: 1,
+        title: "新增菜单",
+        area: ["395px", "300px"],
+        content: $("#addMenuBox"),
+    });
+}
+
+function do_add_menu(main_id) {
+    var knowledgeName = $("#knowledge_name").val();
+    var href = $("#resourse_url_view").val();
+    if (href == null || href ==""){
+        href = "#";
+    }
+    $.ajax({
+        url: "/menu/add_menu",
+        type: "POST",
+        // 入参
+        data: {
+            knowledgeName:knowledgeName,
+            href:href,
+            parentMenuId:main_id
+
+        },
+        success: function (data) {
+            if (data.msg == "success") {
+                layer.msg("添加成功");
+            } else {
+                layer.alert(data.msg);
+            }
+            refresh();
+        },
+        error: function () {
+            // layer.msg("客户端请求有误");
+            layer.alert("新增知识模块时发生请求错误");
+        }
+    })
 }

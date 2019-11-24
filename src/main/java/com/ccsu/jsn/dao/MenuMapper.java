@@ -15,4 +15,5 @@ public interface MenuMapper {
     Menu selectById(long id);
     Menu selectByName(String name);
     List<Menu> selectMenusByParentId(long parentId);
+    int insert(Menu menu);
 }

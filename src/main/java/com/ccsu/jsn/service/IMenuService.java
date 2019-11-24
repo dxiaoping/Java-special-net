@@ -1,5 +1,6 @@
 package com.ccsu.jsn.service;
 
+import com.ccsu.jsn.common.Result;
 import com.ccsu.jsn.pojo.Menu;
 
 import java.util.List;
@@ -11,4 +12,5 @@ import java.util.List;
  */
 public interface IMenuService {
     List<Menu> getMenuList(long id);
+    Result addNewMenu(long parentMenuId,String name,String href);
 }

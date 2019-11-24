@@ -12,7 +12,12 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
-    <resultMap id="menuList" type="java.util.List"></resultMap>
+    <parameterMap id="menuPar" type="com.ccsu.jsn.pojo.Menu">
+        <parameter property="id"/>
+        <parameter property="name"/>
+        <parameter property="parentId"/>
+        <parameter property="href"/>
+    </parameterMap>
     <select id="selectById" resultMap="menu">
         select * from menu where id = #{id}
     </select>
@@ -23,4 +28,24 @@
     <select id="selectMenusByParentId" resultMap="menu">
         select * from menu where `parent_id`=#{parentId}
     </select>
+
+    <insert id="insert" parameterMap="menuPar">
+
+        insert into menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="href != null">href,</if>
+
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id ,jdbcType=INTEGER},</if>
+            <if test="name != null">#{name ,jdbcType=VARCHAR},</if>
+            <if test="parentId != null">#{parentId ,jdbcType=INTEGER},</if>
+            <if test="href != null">#{href ,jdbcType=VARCHAR},</if>
+
+        </trim>
+    </insert>
 </mapper>

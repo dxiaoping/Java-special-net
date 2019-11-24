@@ -1,5 +1,6 @@
 package com.ccsu.jsn.util;
 
+import com.ccsu.jsn.dao.ContentMapper;
 import com.ccsu.jsn.dao.EnclosuresMapper;
 import com.ccsu.jsn.dao.MenuMapper;
 import com.ccsu.jsn.pojo.Enclosures;
@@ -19,6 +20,12 @@ public class IdFactory {
 
     @Autowired
     private EnclosuresMapper enclosuresMapper;
+
+    @Autowired
+    private ContentMapper contentMapper;
+
+    @Autowired
+    private MenuMapper menuMapper;
     private Random random = new Random();
 
     public long createEnclo() {
@@ -27,13 +34,7 @@ public class IdFactory {
         long min = 1000001;
         long id = min + (((long) (random.nextDouble() * (max - min))));
 //        long id = random.nextLong(max - min + 1) + min;
-
-        System.out.println("正在创建EncloId");
-        System.out.println(enclosuresMapper);
-        System.out.println(enclosuresMapper.getEnclosuresListByContentId(100001));
-        System.out.println(enclosuresMapper.selectById(1007001));
         while (enclosuresMapper.selectById(id) != null) {
-            System.out.println(enclosuresMapper.selectById(id));
             id = getRandomId(min, max);
         }
         return id;
@@ -47,8 +48,18 @@ public class IdFactory {
 //        long id = random.nextLong(max - min + 1) + min;
 
 
-        while (enclosuresMapper.selectById(id) != null) {
-            System.out.println(enclosuresMapper.selectById(id));
+        while (contentMapper.selectById(id) != null) {
+            id = getRandomId(min, max);
+        }
+        return id;
+    }
+
+    public long createIIMenuId() {
+        //1000001~9999999
+        long max = 9999;
+        long min = 1000;
+        long id = getRandomId(min, max);
+        while (menuMapper.selectById(id) != null) {
             id = getRandomId(min, max);
         }
         return id;
