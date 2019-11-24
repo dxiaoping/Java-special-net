@@ -80,21 +80,21 @@ public class FileController {
         File file = new File(path + url);
 //        filename = this.getFilename(request, filename);
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentDispositionFormData("attachment", getFilename(request, fileName));
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
     }
 
-//    public String getFilename(HttpServletRequest request, String filename) throws Exception {
-//        String[] IEBrowserKeyWord = {"MSIE", "Trident", "Edge"};
-//        String userAgent = request.getHeader("User-Agent");
-//        for (String keyWord : IEBrowserKeyWord) {
-//            if (userAgent.contains(keyWord)) {
-//                return URLEncoder.encode(filename, "UTF-8");
-//            }
-//        }
-//        return new String(filename.getBytes("UTF-8"), "ISO-8859-1");
-//    }
+    public String getFilename(HttpServletRequest request, String filename) throws Exception {
+        String[] IEBrowserKeyWord = {"MSIE", "Trident", "Edge"};
+        String userAgent = request.getHeader("User-Agent");
+        for (String keyWord : IEBrowserKeyWord) {
+            if (userAgent.contains(keyWord)) {
+                return URLEncoder.encode(filename, "UTF-8");
+            }
+        }
+        return new String(filename.getBytes("UTF-8"), "ISO-8859-1");
+    }
 
     //    @RequestMapping("upload_view")
     public String gotoUploadView() {

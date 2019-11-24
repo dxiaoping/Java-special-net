@@ -101,7 +101,7 @@
     function upload() {
         var formData = new FormData();
         formData.append("upload_file", $("#file")[0].files[0]);
-        formData.append("id", $("#file").parent().attr("name"));
+        formData.append("id", $("#file").parent().parent().attr("name"));
         $.ajax({
             url: "/content/upload",
             type: 'POST',
@@ -167,6 +167,8 @@
                         li.setAttribute("id", list[i].id);
                         li.setAttribute("onclick", "aj_display_content(" + list[i].id + ")");
                         li.setAttribute("style", "float:none;opacity:0.8;");
+                        li.setAttribute("onmouseover", "menu_over(id)");
+                        li.setAttribute("onmouseout", "menu_out(id)");
                         a.innerHTML = list[i].name;
                         ul.appendChild(li);
                     }
