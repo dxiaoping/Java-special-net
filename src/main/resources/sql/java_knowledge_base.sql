@@ -5,20 +5,20 @@ use java_knowledge_base;
 # 用户表
 drop table `user`;
 create table `user` (
-  `phone` bigint(20) not null comment ''手机号'',
-  `role` int(2) not null default 2 comment ''用户角色'',
-  `name` varchar(20) default null comment ''用户名'',
-  `password` varchar(20) not null default ''123456'' comment ''用户密码'',
-  `security_question` varchar(100) default null comment ''密保问题'',
-  `security_answer` varchar(100) default null comment ''密保答案'',
-  `create_time` datetime DEFAULT NULL COMMENT ''注册时间'',
+  `phone` bigint(20) not null comment '手机号',
+  `role` int(2) not null default 2 comment '用户角色',
+  `name` varchar(20) default null comment '用户名',
+  `password` varchar(20) not null default '123456' comment '用户密码',
+  `security_question` varchar(100) default null comment '密保问题',
+  `security_answer` varchar(100) default null comment '密保答案',
+  `create_time` datetime DEFAULT NULL COMMENT '注册时间',
   primary key (phone)
-) comment = ''用户信息表'';
+) comment = '用户信息表';
 
 
 alter table user
   add column `create_time` datetime DEFAULT NULL
-COMMENT ''注册时间'';
+COMMENT '注册时间'';
 
 alter table user
   change column securityAnswer security_answer varchar(100) default null

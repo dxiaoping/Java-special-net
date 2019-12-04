@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.javalearn.dao.KnownMapper">
+    <resultMap id="known" type="com.ccsu.javalearn.pojo.Known">
+        <result property="id" column="id"/>
+        <result property="menuId" column="menu_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="text" column="text"/>
+        <result property="attachment" column="attachment"/>
+        <result property="scanCount" column="scan_count"/>
+        <result property="downloadCount" column="download_count"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <parameterMap id="knownPar" type="com.ccsu.javalearn.pojo.Known">
+        <parameter property="id"/>
+        <parameter property="menuId"/>
+        <parameter property="userId"/>
+        <parameter property="name"/>
+        <parameter property="text"/>
+        <parameter property="attachment"/>
+        <parameter property="scanCount"/>
+        <parameter property="downloadCount"/>
+        <parameter property="createTime"/>
+    </parameterMap>
+
+    <select id="selectByMenuId" resultMap="known">
+    select * from known where menu_id = #{menuId}
+    </select>
+
+    <select id="selectById" resultMap="known">
+    select * from known where id = #{id}
+    </select>
+
+    <insert id="insert" parameterMap="knownPar">
+        insert into known(id,menu_id,user_id,name,text,attachment,scan_count,download_count,create_time)
+        values (#{id},#{menuId},#{userId},#{name},#{text},#{attachment},0,0,now())
+
+        <!--insert into known-->
+        <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+            <!--<if test="id != null">id,</if>-->
+            <!--<if test="menuId != null">menu_id,</if>-->
+            <!--<if test="userId != null">user_id,</if>-->
+            <!--<if test="name != null">name,</if>-->
+            <!--<if test="text != null">text,</if>-->
+            <!--<if test="attachment != null">attachment,</if>-->
+            <!--<if test="scanCount">scan_count,</if>-->
+            <!--<if test="downloadCount">download_count,</if>-->
+            <!--<if test="createTime">create_time,</if>-->
+
+
+        <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+            <!--<if test="id != null">#{id,jdbcType=INTEGER},</if>-->
+            <!--<if test="menuId != null">#{menuId,jdbcType=INTEGER},</if>-->
+            <!--<if test="userId != null">#{userId,jdbcType=INTEGER},</if>-->
+            <!--<if test="name != null">#{name,jdbcType=VARCHAR},</if>-->
+            <!--<if test="text != null">#{text,jdbcType=VARCHAR},</if>-->
+            <!--<if test="attachment != null">#{attachment,jdbcType=VARCHAR},</if>-->
+            <!--<if test="scanCount">#{scanCount,jdbcType=INTEGER},</if>-->
+            <!--<if test="downloadCount">#{downloadCount,jdbcType=INTEGER},</if>-->
+            <!--<if test="createTime">#{createTime},</if>-->
+
+        <!--</trim>-->
+    </insert>
+
+    <update id="update" parameterMap="knownPar">
+        update known
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="menuId != 0">menu_id = #{menuId},</if>
+            <if test="userId != 0">user_id = #{userId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="text != null">text = #{text},</if>
+            <if test="attachment != null">attachment = #{attachment},</if>
+            <if test="scanCount != null">scan_count = #{scanCount},</if>
+            <if test="downloadCount != null">download_count = #{downloadCount},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </set>
+        where id =#{id}
+    </update>
+
+</mapper>

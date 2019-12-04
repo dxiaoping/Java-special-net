@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.javalearn.dao.ResourceMapper">
+    <resultMap id="resource" type="com.ccsu.javalearn.pojo.Resource">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="userId" column="user_id"/>
+        <result property="menuId" column="menu_id"/>
+        <result property="description" column="description"/>
+        <result property="url" column="url"/>
+        <result property="resType" column="res_type"/>
+        <result property="downloadCount" column="download_count"/>
+        <result property="createTime" column="create_time"/>
+
+    </resultMap>
+
+    <parameterMap id="resourcePar" type="com.ccsu.javalearn.pojo.Resource">
+        <parameter property="id"/>
+        <parameter property="name"/>
+        <parameter property="userId"/>
+        <parameter property="menuId"/>
+        <parameter property="description"/>
+        <parameter property="url"/>
+        <parameter property="resType"/>
+        <parameter property="downloadCount"/>
+        <parameter property="createTime"/>
+    </parameterMap>
+
+    <select id="selectResourceByMenuId" resultMap="resource">
+    select * from resources
+    where menu_id = #{menuId}
+    </select>
+    <!--<select id="selectImgByMenuId" resultMap="resource">-->
+    <!--select * from resources-->
+    <!--where menu_id = #{menuId} and res_type=3-->
+    <!--</select>-->
+
+    <select id="selectById" resultMap="resource">
+    select * from resources where id = #{id}
+    </select>
+
+    <insert id="insert" parameterMap="resourcePar">
+        insert into
+        resources(id,name,user_id,menu_id,description,url,res_type,download_count,create_time)
+        values (#{id},#{name},#{userId},#{menuId},#{description},#{url},#{resType},0,now())
+    </insert>
+
+    <update id="update" parameterMap="resourcePar">
+    update resources
+    <set>
+    <if test="id != 0">id = #{id},</if>
+    <if test="name != null">name = #{name},</if>
+    <if test="userId != 0">user_id = #{userId},</if>
+    <if test="menuId != 0">menu_id = #{menuId},</if>
+    <if test="description != null">description = #{description},</if>
+    <if test="url != null">url = #{url},</if>
+    <if test="resType != 0">res_type = #{resType},</if>
+    <if test="downloadCount != 0">download_count = #{downloadCount},</if>
+    <if test="createTime != null">create_time = #{createTime},</if>
+    </set>
+    where id =#{id}
+    </update>
+
+</mapper>

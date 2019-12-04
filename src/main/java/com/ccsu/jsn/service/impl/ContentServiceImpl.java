@@ -144,36 +144,36 @@ public class ContentServiceImpl implements IContentService {
     }
 
     private Result fileUpload(MultipartFile file, String path) {
-        String fileName = file.getOriginalFilename();
-
-        String fileSuffix = fileName.substring(fileName.lastIndexOf('.') + 1);
-
-        String uploadFileName = UUID.randomUUID().toString() + "." + fileSuffix;
-        System.out.println("开始上传");
-        logger.info("开始上传文件，上传的文件名：{}，上传的路径：{}，新文件名：{} ", fileName, path, uploadFileName);
-        logger.info("文件类型为：{}", map.get(fileSuffix));
-        path = path + "/" + map.get(fileSuffix);
-        System.out.println(path);
-        content.set(map.get(fileSuffix), "/upload/" + map.get(fileSuffix) + "/" + uploadFileName);
-        File fileDir = new File(path);
-        if (!fileDir.exists()) {
-            fileDir.setWritable(true);
-            fileDir.mkdirs();
-        }
-
-        File targetFile = new File(path, uploadFileName);
-
-        try {
-            file.transferTo(targetFile);
-            //将targetFiile上传到FTP服务器
-//            FTPUtil.uploadFile(Lists.newArrayList(targetFile));
-
-            //删除upload下的文件
-//            logger.info("删除upload下文件结果：{}", targetFile.delete());
-        } catch (IOException e) {
-            logger.error("上传文件异常", e);
-            return Result.error("上传失败");
-        }
+//        String fileName = file.getOriginalFilename();
+////
+////        String fileSuffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+////
+////        String uploadFileName = UUID.randomUUID().toString() + "." + fileSuffix;
+////        System.out.println("开始上传");
+////        logger.info("开始上传文件，上传的文件名：{}，上传的路径：{}，新文件名：{} ", fileName, path, uploadFileName);
+////        logger.info("文件类型为：{}", map.get(fileSuffix));
+////        path = path + "/" + map.get(fileSuffix);
+////        System.out.println(path);
+////        content.set(map.get(fileSuffix), "/upload/" + map.get(fileSuffix) + "/" + uploadFileName);
+////        File fileDir = new File(path);
+////        if (!fileDir.exists()) {
+////            fileDir.setWritable(true);
+////            fileDir.mkdirs();
+////        }
+////
+////        File targetFile = new File(path, uploadFileName);
+////
+////        try {
+////            file.transferTo(targetFile);
+////            //将targetFiile上传到FTP服务器
+//////            FTPUtil.uploadFile(Lists.newArrayList(targetFile));
+////
+////            //删除upload下的文件
+//////            logger.info("删除upload下文件结果：{}", targetFile.delete());
+////        } catch (IOException e) {
+////            logger.error("上传文件异常", e);
+////            return Result.error("上传失败");
+////        }
         return Result.success(path);
     }
 

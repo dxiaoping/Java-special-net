@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccsu.javalearn.dao.ExampleMapper">
+    <resultMap id="example" type="com.ccsu.javalearn.pojo.Example">
+        <result property="id" column="id"/>
+        <result property="menuId" column="menu_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="interpret" column="interpret"/>
+        <result property="runResult" column="run_result"/>
+        <result property="attachment" column="attachment"/>
+        <result property="scanCount" column="scan_count"/>
+        <result property="downloadCount" column="download_count"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <parameterMap id="examplePar" type="com.ccsu.javalearn.pojo.Example">
+        <parameter property="id"/>
+        <parameter property="menuId"/>
+        <parameter property="userId"/>
+        <parameter property="title"/>
+        <parameter property="content"/>
+        <parameter property="interpret"/>
+        <parameter property="runResult"/>
+        <parameter property="attachment"/>
+        <parameter property="scanCount"/>
+        <parameter property="downloadCount"/>
+        <parameter property="createTime"/>
+    </parameterMap>
+
+    <select id="selectByMenuId" resultMap="example">
+    select * from example where menu_id = #{menuId}
+    </select>
+
+    <select id="selectById" resultMap="example">
+    select * from example where id = #{id}
+    </select>
+
+    <insert id="insert" parameterMap="examplePar">
+
+        insert into example(id,user_id,menu_id,title,content,interpret,
+        run_result,attachment,scan_count,download_count,create_time)
+        values (#{id},#{userId},#{menuId},#{title},#{content},#{interpret},#{runResult},
+        #{attachment},0,0,now())
+    </insert>
+
+    <update id="update" parameterMap="examplePar">
+        update example
+        <set>
+            <if test="id != null">id = #{id},</if>
+            <if test="menuId != 0">menu_id = #{menuId},</if>
+            <if test="userId != 0">user_id = #{userId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="interpret != null">interpret = #{interpret},</if>
+            <if test="runResult != null">run_result = #{runResult},</if>
+            <if test="attachment != null">attachment = #{attachment},</if>
+            <if test="scanCount != 0">scan_count = #{scanCount},</if>
+            <if test="downloadCount != 0">download_count = #{downloadCount},</if>
+        </set>
+        where id =#{id}
+    </update>
+
+</mapper>

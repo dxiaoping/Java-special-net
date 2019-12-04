@@ -2,52 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Java资源库</title>
+    <script type="text/javascript" src="/static/jquery/jquery-3.1.4.js"></script>
+    <link rel="styleSheet" href="/static/css/index.css" type="text/css">
+    <script src="/static/js/layer-v3.1.1/layer/layer.js"></script>
+    <script src="/static/js/javalearn.js"></script>
 </head>
-<body>
-    hello spring MVC
-
-    <ul style="left: 100px;position: absolute">
-        <li >小米</li>
-        <li>小米</li>
-        <li>小米</li>
-        <li>小米</li>
-        <li>小米</li>
-        <li>小米</li>
-        <li>小米</li>
+<body onload="refresh()">
+<div id="popup" style="display: flex;">
+    <!--登录弹窗-->
+    <div id="header">
+        <div id="header-con">
+            <div id="bLogin"><a href="javascript:;" onclick="ShowLoginText()">登录</a></div>
+            <div id="bReg"><a href="javascript:;" onclick="ShowRegisterText('reg')">注册</a></div>
+            <div id="logout" style="display: none"><a href="javascript:;" onclick="logout()">注销</a></div>
+            <div id="add-tea" style="display: none"><a href="javascript:;" onclick="ShowRegisterText('add-teacher')">添加教师</a>
+            </div>
+            <div id="display-user" style="display: none"><a href="javascript:;">欢迎用户<span id="user"/> 登录</a></div>
+        </div>
+    </div>
+    <div id="loginBox">
+        <div class="login-item"><input type="text" id="InputUsername" placeholder="请输入用户名"/></div>
+        <div class="login-item"><input type="password" id="InputUserPwd" placeholder="请输入密码"/></div>
+        <div class="login-item"><a onclick="Login()">登录</a></div>
+    </div>
+    <div id="registerBox">
+        <div class="login-item"><input type="text" id="phone" placeholder="请输入手机号"/></div>
+        <div class="login-item"><input type="password" id="password" placeholder="请输入密码"/></div>
+        <div class="login-item"><input type="text" id="name" placeholder="请输入用户名"/></div>
+        <div id="reg" class="login-item"><a onclick="register(2)">注册</a></div>
+        <div id="add-teacher" class="login-item"><a onclick="register(1)">添加教师</a></div>
+    </div>
+    <div id="addMenuBox">
+        <div class="login-item"><input type="text" id="knowledge_name" placeholder="请输入相关资源子目录名称"/></div>
+        <div id="add-menu" class="login-item"><a id="add_menu">新增</a></div>
+    </div>
+    <div id="addResourceBox">
+        <div class="login-item"><input type="text" id="resourse_description" placeholder="资源描述"/>
+        </div>
+        <div class="login-item"><input id="file-resource" type="file" name="file" /></div>
+        <div id="add-resource" class="login-item"><a id="add_resource">新增资源</a></div>
+    </div>
+</div>
+<div>
+    <ul id="menu-view">
     </ul>
-
-    <!--<video width="800" autoplay="autoplay" controls="controls">-->
-        <!--&lt;!&ndash;<source src="H:\\临时文件\\图灵\\二、VIP课程：源码框架专题\\09-spring5新特性-元歌\\spring5新特性.mp4" type="video/mp4"></source>&ndash;&gt;-->
-        <!--<source src="" type="video/mp4"></source>-->
-    <!--</video>-->
-
-    <!--<div>-->
-        <!--<iframe name="text" id="text" width="800" height="500" src="cc\FTPUtil.java"></iframe>-->
-    <!--</div>-->
-
-    <!--<div>-->
-        <!--<iframe name="code" id="code" width="800" height="500" src="MessageListener.java"></iframe>-->
-        <!--<iframe name="code" id="code" width="800" height="500" src="http://www.imooc.com/learn/85"></iframe>-->
-
-    <!--</div>-->
-
-    <!--<div>-->
-        <!--<img src="img.png"/>-->
-    <!--</div>-->
+    <div style="height: 600px; width:250px;top: 180px;left:30px;position:absolute;background-color: #f3fff2;">
+        <ul id="menuIV-view"></ul>
+    </div>
+</div>
+<div id="edit-example-page" style="left: 300px;top:160px;position: absolute;display: none">
+    <H1>实例题目</H1>
+    <div ><textarea id="title-example" class="textarea-style" style="width: 300px;height: 35px;"></textarea></div>
+    <H1>实例内容</H1>
+    <div><textarea id="content-example" class="textarea-style" style="width: 800px;height: 360px;"></textarea></div>
+    <input id="file-code" type="file" name="file"/>
+    <H1>实例讲解</H1>
+    <div><textarea id="interpret-example" class="textarea-style" style="width: 800px;height: 360px;"></textarea></div>
+    <H1>运行结果</H1>
+    <div><textarea id="run-result-example" class="textarea-style" style="width: 800px;height: 360px;"></textarea></div>
+    <div id="button-con" style="left: 600px;top: 10px;position: relative">
+        <button id="save" onclick="save_example(0)">保存</button>
+        <button id="cancel" onclick="cancel_edit(1)">取消</button>
+        <button id="reset" onclick="clean()">重置</button>
+    </div>
+</div>
+<div id="main-example-page" style="left: 300px;top:160px;position: absolute;display: none">
+    <H1>实例题目</H1>
+    <div id="display-title-example"class="display-word">
+    </div>
+    <H1>实例内容</H1>
+    <div id="display-content-example" class="display-word"></div>
+    <a id="code-address" href="#">下载源码</a>
+    <H1>实例讲解</H1>
+    <div id="display-interpret-example" class="display-word"></div>
+    <H1>运行结果</H1>
+    <div id="display-run-result-example" class="display-word"></div>
+    <div style="left: 600px;top: 10px;position: relative">
+        <button id="edit" onclick="edit(1)">编辑</button>
+    </div>
+</div>
+<div id="resource-page" class="display-word" style="left: 300px;top:160px;position: absolute;display: block">
+</div>
+</div>
 </body>
-<style>
-    #menu li a{
-        display:block; /* 将链接设为块级元素 */
-        width:150px; /* 设置宽度 */
-        height:30px; /* 设置高度 */
-        line-height:30px; /* 设置行高，将行高和高度设置同一个值，可以让单行文本垂直居中 */
-        text-align:center; /* 居中对齐文字 */
-        background:#3A4953; /* 设置背景色 */
-        color:#fff; /* 设置文字颜色 */
-        text-decoration:none; /* 去掉下划线 */
-        border-right:1px solid #000; /* 在左侧加上分隔线 */
-    }
-
-</style>
 </html>

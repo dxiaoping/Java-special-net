@@ -1,24 +1,24 @@
-package com.ccsu.jsn.controller;
+package com.ccsu.javalearn.controller;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.ccsu.jsn.common.Result;
-import com.ccsu.jsn.pojo.Menu;
-import com.ccsu.jsn.service.IMenuService;
-import org.apache.ibatis.session.SqlSessionFactory;
+import com.ccsu.javalearn.common.Const;
+import com.ccsu.javalearn.common.Result;
+import com.ccsu.javalearn.pojo.Menu;
+import com.ccsu.javalearn.pojo.User;
+import com.ccsu.javalearn.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  * @Description
  * @auther DuanXiaoping
- * @create 2019-11-03 9:43
+ * @create 2019-11-30 15:34
  */
 @Controller
 @RequestMapping("menu")
@@ -42,12 +42,30 @@ public class MenuController {
     @ResponseBody
     public Result addMenu(
             @RequestParam("parentMenuId") long parentMenuId,
-            @RequestParam("href") String href,
-            @RequestParam("knowledgeName") String name
+            @RequestParam("knowledgeName") String name,
+            HttpSession session
     ) {
 
+        User user =(User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null){
+            return Result.error("用户未登录");
+        }
+        if (user.getRole()== Const.Role.ROLE_STUDENT){
+            return Result.error("学生不允许添加模块");
+        }
+        return menuService.addNewMenu(parentMenuId,name);
+    }
 
-        return menuService.addNewMenu(parentMenuId,name,href);
+    @RequestMapping(value = "refresh",method = RequestMethod.POST)
+    @ResponseBody
+    public Result refresh(
+            HttpSession session
+    ){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+
+//        ContentVo contentVo = (ContentVo) session.getAttribute(Const.CURRENT_CONTENT);
+//        RefreshVo refreshVo = new RefreshVo(user,contentVo);
+        return Result.success(user);
     }
     @RequestMapping("menu_view")
     public String menuView() {

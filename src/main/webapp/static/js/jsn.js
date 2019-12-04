@@ -1,4 +1,4 @@
-function ShowLoginText() {
+add_menufunction ShowLoginText() {
     layer.open({
         type: 1,
         title: "登录",
@@ -6,7 +6,7 @@ function ShowLoginText() {
         content: $("#loginBox"),
     });
 }
-
+ShowResourceBox
 function ShowRegisterText(role) {
 
     $("#reg").css("display", "none");
@@ -274,19 +274,19 @@ function login_state(user) {
     }
 }
 
-function add_menu(main_id) {
-    if (main_id == 106) {
-        $("#resourse_url_view").css("display", "block");
-    } else {
-        $("#resourse_url_view").css("display", "none");
-    }
-    layer.open({
-        type: 1,
-        title: "新增菜单",
-        area: ["395px", "300px"],
-        content: $("#addMenuBox"),
-    });
-}
+// function add_menu(main_id) {
+//     if (main_id == 106) {
+//         $("#resourse_url_view").css("display", "block");
+//     } else {
+//         $("#resourse_url_view").css("display", "none");
+//     }
+//     layer.open({
+//         type: 1,
+//         title: "新增菜单",
+//         area: ["395px", "300px"],
+//         content: $("#addMenuBox"),
+//     });
+// }
 
 function do_add_menu(main_id) {
     var knowledgeName = $("#knowledge_name").val();

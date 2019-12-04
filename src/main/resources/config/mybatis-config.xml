@@ -12,16 +12,21 @@
                 <!--<property name="username" value="${username}"/>-->
                 <!--<property name="password" value="${password}"/>-->
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://47.101.72.84:3306/java_knowledge_base?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useTimezone=true&amp;serverTimezone=GMT%2B8"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/java_knowledge_base?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;allowPublicKeyRetrieval=true&amp;useTimezone=true&amp;serverTimezone=GMT%2B8"/>
                 <property name="username" value="root"/>
-                <property name="password" value="123456"/>
+                <property name="password" value="dxp971216"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/MenuMapper.xml"/>
+        <mapper resource="mapper/Menu2Mapper.xml"/>
         <mapper resource="mapper/ContentMapper.xml"/>
         <mapper resource="mapper/EnclosuresMapper.xml"/>
+        <mapper resource="mapper/ExampleMapper.xml"/>
+        <mapper resource="mapper/ResourceMapper.xml"/>
+        <mapper resource="mapper/KnownMapper.xml"/>
+
     </mappers>
 </configuration>
