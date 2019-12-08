@@ -172,3 +172,16 @@
 #addResourceBox{
     display:none;
 }
+#sbaddMenuBox{
+    display:none;
+}
+
+#sbeditMenuBox{
+    display:none;
+}
+/*1.0.3*/
+table{ background-color: black; }
+tr{ background-color: white; }
+table {
+    border-collapse: collapse;
+}

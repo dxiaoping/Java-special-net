@@ -12,6 +12,11 @@ public class Menu {
     private long parentId;
     private String name;
     private int rank;
+    private String description;
+    private Date createTime;
+    private long userId;
+    private String creator;
+
 
     public Menu() {
     }
@@ -23,6 +28,46 @@ public class Menu {
         this.rank = rank;
     }
 
+    public Menu(long id, long parentId, String name, String description, long userId, String creator) {
+        this.id = id;
+        this.parentId = parentId;
+        this.name = name;
+        this.description = description;
+        this.userId = userId;
+        this.creator = creator;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
 
     public long getId() {
         return id;

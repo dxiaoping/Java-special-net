@@ -45,13 +45,15 @@ public class ExampleServiceImpl implements IExampleService {
 
         if (example.getId() == Const.NEW_EXAMPLE) {
 
-            Result result = menuService.addNewMenu(menuIId, example.getTitle());
+//            Result result = menuService.addNewMenu(menuIId, example.getTitle());
 
-            long menuId = (long) result.getData();
+//            long menuId = (long) result.getData();
             long id = idFactory.createExample();
             example.setId(id);
-            example.setMenuId(menuId);
+            example.setMenuId(menuIId);
             exampleMapper.insert(example);
+        }else {
+            exampleMapper.update(example);
         }
         return Result.success(0);
     }

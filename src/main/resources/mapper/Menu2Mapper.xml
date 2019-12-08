@@ -8,6 +8,10 @@
         <result property="name" column="name"/>
         <result property="parentId" column="parent_id"/>
         <result property="rank" column="rank"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="userId" column="user_id"/>
+        <result property="creator" column="creator"/>
     </resultMap>
 
     <parameterMap id="menuPar" type="com.ccsu.javalearn.pojo.Menu">
@@ -15,6 +19,10 @@
         <parameter property="name"/>
         <parameter property="parentId"/>
         <parameter property="rank"/>
+        <parameter property="description"/>
+        <parameter property="createTime"/>
+        <parameter property="userId"/>
+        <parameter property="creator"/>
     </parameterMap>
     <select id="selectById" resultMap="menu">
         select * from menu where id = #{id}
@@ -22,6 +30,9 @@
 
     <select id="selectByName" resultMap="menu">
         select * from menu where `name`=#{name}
+    </select>
+    <select id="delete" resultMap="menu">
+        delete from menu where `id`=#{id}
     </select>
     <select id="selectMenusByParentId" resultMap="menu">
         select * from menu where `parent_id`=#{parentId}
@@ -35,6 +46,10 @@
             <if test="name != null">name,</if>
             <if test="parentId != null">parent_id,</if>
             <if test="rank != null">rank,</if>
+            <if test="description != null">description,</if>
+            <if test="1 == 1">create_time,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="creator != null">creator,</if>
 
 
         </trim>
@@ -43,7 +58,21 @@
             <if test="name != null">#{name ,jdbcType=VARCHAR},</if>
             <if test="parentId != null">#{parentId ,jdbcType=INTEGER},</if>
             <if test="rank != null">#{rank ,jdbcType=INTEGER},</if>
+            <if test="description != null">#{description ,jdbcType=VARCHAR},</if>
+            <if test="1 == 1">now(),</if>
+            <if test="userId != 0">#{userId ,jdbcType=INTEGER},</if>
+            <if test="creator != null">#{creator ,jdbcType=VARCHAR},</if>
 
         </trim>
     </insert>
+    <update id="update" parameterMap="menuPar">
+        update menu
+        <set>
+
+            <if test="name != null">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+
+        </set>
+        where id =#{id}
+    </update>
 </mapper>

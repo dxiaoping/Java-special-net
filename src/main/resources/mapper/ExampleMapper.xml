@@ -15,6 +15,8 @@
         <result property="scanCount" column="scan_count"/>
         <result property="downloadCount" column="download_count"/>
         <result property="createTime" column="create_time"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
     </resultMap>
 
     <parameterMap id="examplePar" type="com.ccsu.javalearn.pojo.Example">
@@ -29,9 +31,15 @@
         <parameter property="scanCount"/>
         <parameter property="downloadCount"/>
         <parameter property="createTime"/>
+        <parameter property="description"/>
+        <parameter property="creator"/>
     </parameterMap>
 
     <select id="selectByMenuId" resultMap="example">
+    select * from example where menu_id = #{menuId}
+    </select>
+
+    <select id="getExampleByMenuId" resultMap="example">
     select * from example where menu_id = #{menuId}
     </select>
 
@@ -42,15 +50,15 @@
     <insert id="insert" parameterMap="examplePar">
 
         insert into example(id,user_id,menu_id,title,content,interpret,
-        run_result,attachment,scan_count,download_count,create_time)
+        run_result,attachment,scan_count,download_count,create_time,description,creator)
         values (#{id},#{userId},#{menuId},#{title},#{content},#{interpret},#{runResult},
-        #{attachment},0,0,now())
+        #{attachment},0,0,now(),#{description},#{creator})
     </insert>
 
     <update id="update" parameterMap="examplePar">
         update example
         <set>
-            <if test="id != null">id = #{id},</if>
+            <if test="id != 0">id = #{id},</if>
             <if test="menuId != 0">menu_id = #{menuId},</if>
             <if test="userId != 0">user_id = #{userId},</if>
             <if test="title != null">title = #{title},</if>
@@ -60,8 +68,12 @@
             <if test="attachment != null">attachment = #{attachment},</if>
             <if test="scanCount != 0">scan_count = #{scanCount},</if>
             <if test="downloadCount != 0">download_count = #{downloadCount},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="creator != null">creator = #{creator},</if>
         </set>
         where id =#{id}
     </update>
-
+    <select id="delete" resultMap="example">
+        delete from example where `id`=#{id}
+    </select>
 </mapper>

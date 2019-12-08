@@ -10,8 +10,11 @@
     <!--<script src="/static/js/jsn.js"></script>-->
     <script src="/static/js/javalearn.js"></script>
     <script src="/static/js/liu.js"></script>
+
+
 </head>
 <body onload="refresh()">
+
 <div id="popup" style="display: flex;">
     <!--登录弹窗-->
     <div id="header">
@@ -49,70 +52,46 @@
     <div id="addResourceBox">
         <div class="login-item"><input type="text" id="resourse_description" placeholder="资源描述"/>
         </div>
-        <div class="login-item"><input id="file-resource" type="file" name="file" /></div>
+        <div class="login-item"><input id="file-resource" type="file" name="file"/></div>
         <div id="add-resource" class="login-item"><a id="add_resource">新增资源</a></div>
+    </div>
+    <div id="sbaddMenuBox">
+        <div class="login-item"><input type="text" id="menu_name" placeholder="子模块名称"/></div>
+        <div class="login-item"><textarea style="width: 350px;height: 200px;" type="text" id="menu_description"
+                                          placeholder="子模块描述"></textarea></div>
+
+        <!--<div class="login-item"><a href="#" onclick="Login()">登录</a></div>-->
+        <div class="login-item"><a id="sb_add_menu">新增</a></div>
+    </div>
+
+    <div id="sbeditMenuBox">
+        <div class="login-item"><textarea style="width: 350px;height: 30px;" type="text" id="edit_menu_name" placeholder="子模块名称"></textarea></div>
+        <div class="login-item"><textarea style="width: 350px;height: 200px;" type="text" id="edit_menu_description"
+                                          placeholder="子模块描述"></textarea></div>
+
+        <!--<div class="login-item"><a href="#" onclick="Login()">登录</a></div>-->
+        <div class="login-item"><a id="sb_edit_menu">修改</a></div>
     </div>
 
     <!--================================================================================-->
 </div>
 <div>
     <ul id="menu-view">
-        <!--<li style="left: 0px;position: absolute;">基础知识-->
-        <!--<ul>-->
-            <!--<li>数组</li>-->
-            <!--<li>数组</li>-->
-            <!--<li>数组</li>-->
-            <!--<li>数组</li>-->
-        <!--</ul>-->
-        <!--</li>-->
-        <!--<li style="left: 225px;position: absolute;">基础知识</li>-->
-        <!--<li style="left: 450px;position: absolute;">基础知识</li>-->
-        <!--<li style="left: 675px;position: absolute;">基础知识</li>-->
-        <!--<li style="left: 900px;position: absolute;">基础知识</li>-->
-        <!--<li style="left: 1125px;position: absolute;">相关资源-->
-            <!--<ul>-->
-                <!--<li>软件资源下载</li>-->
-                <!--<li>软件资源下载</li>-->
-                <!--<li>软件资源下载</li>-->
-                <!--<li>软件资源下载</li>-->
 
-            <!--</ul>-->
-        <!--</li>-->
     </ul>
-    <div style="height: 600px; width:250px;top: 180px;left:30px;position:absolute;background-color: #f3fff2;">
+    <!--<div style="height: 600px; width:250px;top: 180px;left:30px;position:absolute;background-color: #f3fff2;">-->
 
-            <ul id="menuIV-view">
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-                <!--<li>进阶知识</li>-->
-            </ul>
+    <!--<ul id="menuIV-view">-->
 
-    </div>
+    <!--</ul>-->
+
+    <!--</div>-->
+
 
 </div>
 <div id="edit-example-page" style="left: 300px;top:160px;position: absolute;display: none">
     <H1>实例题目</H1>
-    <div ><textarea id="title-example" class="textarea-style" style="width: 300px;height: 35px;"></textarea></div>
+    <div><textarea id="title-example" class="textarea-style" style="width: 300px;height: 35px;"></textarea></div>
 
     <H1>实例内容</H1>
     <div><textarea id="content-example" class="textarea-style" style="width: 800px;height: 360px;"></textarea></div>
@@ -134,20 +113,24 @@
 </div>
 <div id="main-example-page" style="left: 300px;top:160px;position: absolute;display: none">
     <H1>实例题目</H1>
-    <div id="display-title-example"class="display-word" style="font-size: 24px;">
-        </div><br><br>
+    <div id="display-title-example" class="display-word" style="font-size: 24px;">
+    </div>
+    <br><br>
 
     <H1>实例内容</H1>
-    <textarea id="display-content-example" readonly="true" style="width: 800px;height: 500px" class="textarea-style"></textarea>
+    <textarea id="display-content-example" readonly="true" style="width: 800px;height: 500px"
+              class="textarea-style"></textarea>
     <a id="code-address" href="#" onclick="countplus()">下载源码</a>
     <H2>浏览次数：<span id="scan-count-example"></span></H2>
     <H2>下载次数：<span id="down-count-example"></span></H2>
     <br><br>
     <H1>实例讲解</H1>
-    <textarea id="display-interpret-example" readonly="true" style="width: 800px;height: 500px" class="textarea-style"></textarea>
+    <textarea id="display-interpret-example" readonly="true" style="width: 800px;height: 500px"
+              class="textarea-style"></textarea>
     <br><br>
     <H1>运行结果</H1>
-    <textarea id="display-run-result-example" readonly="true" style="width: 800px;height: 280px" class="textarea-style"></textarea>
+    <textarea id="display-run-result-example" readonly="true" style="width: 800px;height: 280px"
+              class="textarea-style"></textarea>
     <br><br>
     <div style="left: 600px;top: 10px;position: relative">
         <button id="edit" onclick="edit(1)">编辑</button>
@@ -155,69 +138,196 @@
     <H2>创建时间：<span id="time-example"></span></H2>
 </div>
 
-<div id="resource-page" class="display-word" style="left: 300px;top:160px;position: absolute;display: none">
-    <!--<div style="margin: 1cm 0cm 0cm 1cm;">-->
-        <!--资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名<br>-->
-        <!--<a href="#" style="left: 700px;position: absolute;white-space : nowrap">下载</a>-->
-        <!--<h2 style="left: 550px;position: absolute;">下载次数：<span id="resource-download-count1"/> </h2>-->
-    <!--</div>-->
-    <!--<div style="margin: 1cm 0cm 0cm 1cm;">-->
-        <!--资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名<br>-->
-        <!--<a href="#" style="left: 700px;position: absolute;white-space : nowrap">下载</a>-->
-        <!--<h2 style="left: 550px;position: absolute;">下载次数：<span id="resource-download-count2"/> </h2>-->
-    <!--</div>-->
-    <!--<div style="margin: 1cm 0cm 0cm 1cm;">-->
-        <!--资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名<br>-->
-        <!--<a href="#" style="left: 700px;position: absolute;white-space : nowrap">下载</a>-->
-        <!--<h2 style="left: 550px;position: absolute;">下载次数：<span id="resource-download-count"/> </h2>-->
-    <!--</div>-->
-    <!--<div style="margin: 1cm 0cm 0cm 1cm;">-->
-        <!--<input id="file" type="file" name="file" />-->
-        <!--&lt;!&ndash;上传按钮,点击后判断是否会覆盖之前文件，征求用户意见&ndash;&gt;-->
-        <!--<button id="upload" onclick="upload()">上传资源</button>-->
-    <!--</div>-->
+<!--<div id="resource-page" class="display-word" style="left: 300px;top:160px;position: absolute;display: none">-->
+<!--&lt;!&ndash;<div style="margin: 1cm 0cm 0cm 1cm;">&ndash;&gt;-->
+<!--&lt;!&ndash;资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名<br>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" style="left: 700px;position: absolute;white-space : nowrap">下载</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<h2 style="left: 550px;position: absolute;">下载次数：<span id="resource-download-count1"/> </h2>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="margin: 1cm 0cm 0cm 1cm;">&ndash;&gt;-->
+<!--&lt;!&ndash;资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名<br>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" style="left: 700px;position: absolute;white-space : nowrap">下载</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<h2 style="left: 550px;position: absolute;">下载次数：<span id="resource-download-count2"/> </h2>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="margin: 1cm 0cm 0cm 1cm;">&ndash;&gt;-->
+<!--&lt;!&ndash;资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名资源名<br>&ndash;&gt;-->
+<!--&lt;!&ndash;<a href="#" style="left: 700px;position: absolute;white-space : nowrap">下载</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<h2 style="left: 550px;position: absolute;">下载次数：<span id="resource-download-count"/> </h2>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="margin: 1cm 0cm 0cm 1cm;">&ndash;&gt;-->
+<!--&lt;!&ndash;<input id="file" type="file" name="file" />&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;上传按钮,点击后判断是否会覆盖之前文件，征求用户意见&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<button id="upload" onclick="upload()">上传资源</button>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
 
+<!--</div>-->
+
+<!--<div id="Teaching-documents-page" style="left: 300px;top:160px;position: absolute;display: none">-->
+<!--&lt;!&ndash;文本文档&ndash;&gt;-->
+<!--<div>-->
+<!--<H1>知识文档</H1>-->
+<!--<textarea id="display-known-text" readonly="true" style="width: 800px;height: 600px"-->
+<!--class="textarea-style"></textarea>-->
+<!--</div>-->
+<!--&lt;!&ndash;图片list&ndash;&gt;-->
+<!--<div id="images">-->
+
+<!--</div>-->
+<!--<div style="left: 600px;top: 10px;position: relative">-->
+<!--<button id="edit-known" onclick="edit_known(1)">编辑</button>-->
+<!--</div>-->
+<!--<div>-->
+<!--<a id="doc-address" href="#">下载本章文档</a>-->
+
+<!--</div>-->
+<!--</div>-->
+
+<!--<div id="edit-Teaching-documents" style="left: 300px;top:160px;position: absolute;display: none">-->
+<!--<H1>题目</H1>-->
+<!--<div><textarea id="title-known" class="textarea-style" readonly="true"-->
+<!--style="width: 300px;height: 35px;"></textarea></div>-->
+
+<!--<H1>知识文本</H1>-->
+<!--<div><textarea id="text-known" class="textarea-style" style="width: 800px;height: 360px;"></textarea></div>-->
+<!--&lt;!&ndash;文档上传&ndash;&gt;-->
+<!--<input id="file-doc" type="file" name="file"/>-->
+<!--&lt;!&ndash;上传按钮,点击后判断是否会覆盖之前文件，征求用户意见&ndash;&gt;-->
+<!--&lt;!&ndash;<button id="upload-code" onclick="upload()">上传文件</button>&ndash;&gt;-->
+<!--<input id="file-img" type="file" name="file"/>-->
+<!--<div id="button-con-konwn" style="left: 600px;top: 10px;position: relative">-->
+<!--<button id="save-konwn" onclick="save_known(0)">保存</button>-->
+<!--<button id="cancel-konwn" onclick="cancel_edit_known(1)">取消</button>-->
+<!--<button id="reset-konwn" onclick="clean()">重置</button>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--二级目录/分模块-->
+<div id="sb-example-class" style="left: 200px;top:160px;position: absolute;display: block">
+    <table border="1" width="1200px">
+        <caption>实例教程</caption>
+        <thead>
+        <tr>
+            <th>名称</th>
+            <th>描述</th>
+            <th>创建时间</th>
+            <th>创建人</th>
+            <th colspan="2">操作</th>
+        </tr>
+        </thead>
+        <tbody id="table-menu2">
+        <!--<tr>-->
+        <!--<td>身</td>-->
+        <!--<td>体</td>-->
+        <!--<td>体</td>-->
+        <!--<td>体</td>-->
+        <!--<td>体</td>-->
+        <!--<td><a href="#">删除</a></td>-->
+        <!--<td><a href="#">修改</a></td>-->
+        <!--</tr>-->
+        </tbody>
+        <!--<tfoot>-->
+        <!--<tr>-->
+        <!--<td colspan="2">底部</td>-->
+        <!--//横向合并-->
+        <!--</tr>-->
+        <!--</tfoot>-->
+    </table>
+
+    <div id="button-sb-menu" style="left: 600px;top: 10px;position: relative">
+        <button id="sb-add-menu">添加</button>
+    </div>
 </div>
+<!--实例列表-->
+<div id="sb-example" style="left: 200px;top:160px;position: absolute;display: none">
+    <table border="1" width="1200px">
+        <caption>实例教程</caption>
 
-<div id="Teaching-documents-page" style="left: 300px;top:160px;position: absolute;display: block">
-    <!--文本文档-->
-    <div>
-        <H1>知识文档</H1>
-        <textarea id="display-known-text" readonly="true" style="width: 800px;height: 600px" class="textarea-style"></textarea>
-    </div>
-    <!--图片list-->
-    <div id="images">
+        <thead>
+        <tr>
+            <th>名称</th>
+            <th>描述</th>
+            <th>浏览次数</th>
+            <th>下载次数</th>
+            <th>创建时间</th>
+            <th>创建人</th>
+            <th colspan="2">操作</th>
+        </tr>
+        </thead>
+        <tbody id="table-example">
 
-    </div>
-    <div style="left: 600px;top: 10px;position: relative">
-        <button id="edit-known" onclick="edit_known(1)">编辑</button>
-    </div>
-    <div>
-        <a id="doc-address" href="#">下载本章文档</a>
+        </tbody>
 
-    </div>
-</div>
+    </table>
 
-<div id="edit-Teaching-documents" style="left: 300px;top:160px;position: absolute;display: none">
-    <H1>题目</H1>
-    <div ><textarea id="title-known" class="textarea-style" readonly ="true" style="width: 300px;height: 35px;"></textarea></div>
-
-    <H1>知识文本</H1>
-    <div><textarea id="text-known" class="textarea-style" style="width: 800px;height: 360px;"></textarea></div>
-    <!--文档上传-->
-    <input id="file-doc" type="file" name="file"/>
-    <!--上传按钮,点击后判断是否会覆盖之前文件，征求用户意见-->
-    <!--<button id="upload-code" onclick="upload()">上传文件</button>-->
-    <input id="file-img" type="file" name="file"/>
-    <div id="button-con-konwn" style="left: 600px;top: 10px;position: relative">
-        <button id="save-konwn" onclick="save_known(0)">保存</button>
-        <button id="cancel-konwn" onclick="cancel_edit_known(1)">取消</button>
-        <button id="reset-konwn" onclick="clean()">重置</button>
+    <div id="button-sb-example" style="left: 600px;top: 10px;position: relative">
+        <button id="sb-add-example">添加</button>
     </div>
 </div>
 </body>
 <script>
+    function refresh() {
+        $.ajax({
+            url: "/menu/data",
+            type: "GET",
+            // 入参
+            data: {
+                menuId: 0
+            },
+            success: function (data) {
+                var list = data.data;
+                var parent = document.getElementById("menu-view");
+                for (var i = 0; i < list.length; i++) {
+                    //动态添加DIV
+                    var li = document.createElement("li");
 
+                    li.setAttribute("id", list[i].id);
+
+
+                    if (list[i].id == 101) {
+                        li.setAttribute("onclick", "get_menuIV(" + 0 + "," + list[i].id + ")");
+                    } else if (list[i].id == 103) {
+                        //table获取二级目录
+                        li.setAttribute("onclick", "get_menu2(" + list[i].id + ")");
+                    } else {
+                        li.setAttribute("onmouseover", "menu_over(id)");
+                        li.setAttribute("onmouseout", "menu_out(id)");
+                    }
+
+                    li.setAttribute("style", "left: " + i * 225 + "px;position: absolute;");
+                    // $("#"+list[i].id).css("left",i*225+"px");
+                    // $("#l"+list[i].id).css("position","absolute");
+                    // if ((id=list[i].id)==106){
+                    //     li.setAttribute("onclick","get_resources("+id+")");
+                    // }
+                    li.innerHTML = list[i].name;
+                    parent.appendChild(li);
+                }
+
+                console.log(data);
+            },
+            error: function () {
+                // layer.msg("客户端请求有误");
+                alert("客户端请求有误")
+            }
+        });
+
+        $.ajax({
+            url: "/menu/refresh",
+            type: "POST",
+            // 入参
+            data: {
+                menuId: 0
+            },
+            success: function (data) {
+                var user = data.data;
+                login_state(user);
+            },
+            error: function () {
+                // layer.msg("客户端请求有误");
+                alert("客户端请求有误")
+            }
+        });
+    }
 </script>
-
 </html>
+

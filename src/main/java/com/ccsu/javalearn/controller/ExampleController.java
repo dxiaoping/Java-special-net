@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Description
@@ -49,7 +50,14 @@ public class ExampleController {
         if (user == null){
             return Result.error("用户未登录");
         }
+        if (user.getRole()== Const.Role.ROLE_STUDENT){
+            return Result.error("学生不允许上传文件");
+        }
+        if(user.getRole()== Const.Role.ROLE_TEACHER && user.getPhone()!= exampleService.getExampleById(id).getUserId()){
+            return Result.error("不能修改其他教师的模块");
+        }
         Example example = new Example(id,user.getPhone(),title,content,interpret,runResult);
+        example.setCreator(user.getName());
         String path = session.getServletContext().getRealPath("upload");
         System.out.println(example);
         exampleService.saveExample(example,menuIId,file,path);
@@ -100,4 +108,47 @@ public class ExampleController {
         return Result.success(0);
     }
 
+//1.0.3
+    @RequestMapping(value = "sb_get_examples",method = RequestMethod.POST)
+    @ResponseBody
+    public Result sbgetExample(
+            @RequestParam("id") long id,
+            HttpSession session
+    ){
+        List<Example> examples = exampleMapper.getExampleByMenuId(id);
+        return Result.success(examples);
+    }
+
+    @RequestMapping(value = "getExample",method = RequestMethod.POST)
+    @ResponseBody
+    public Result sbgetExample(
+            @RequestParam("id") long id
+    ){
+
+        Example example = exampleMapper.selectById(id);
+        example.setScanCount(example.getScanCount()+1);
+        exampleMapper.update(example);
+
+        return Result.success(example);
+    }
+
+
+
+    @RequestMapping(value = "sb_delete_example", method = RequestMethod.GET)
+    @ResponseBody
+    public Result sb_delete_example(
+            @RequestParam("id") long id,
+            HttpSession session
+    ) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return Result.error("用户未登录");
+        }
+        if (user.getRole() == Const.Role.ROLE_STUDENT) {
+            return Result.error("学生不允许添加模块");
+        }
+        exampleMapper.delete(id);
+        return Result.success(0);
+    }
 }

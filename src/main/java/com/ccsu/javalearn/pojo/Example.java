@@ -22,12 +22,17 @@ public class Example {
     private String runResult;
     /** 代码附件*/
     private String attachment;
+    /** 描述*/
+    private String description;
     /** 浏览次数*/
     private int scanCount;
     /** 下载次数*/
     private int downloadCount;
     /** 创建时间*/
     private Date createTime;
+
+    /** 创建人*/
+    private String creator;
 
     private long userId;
 
@@ -41,6 +46,23 @@ public class Example {
         this.content = content;
         this.interpret = interpret;
         this.runResult = runResult;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public long getId() {
